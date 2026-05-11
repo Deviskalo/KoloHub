@@ -27,7 +27,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         style: "width: 2rem; height: 2rem; border-radius: var(--radius-full); object-fit: cover;",
                     }
                     a {
-                        href: "#",
+                        href: "/",
                         class: "kh-text-gradient",
                         style: "font-size: var(--text-lg); font-weight: var(--font-weight-semibold);",
                         "KoloHub"
@@ -58,27 +58,27 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
 
                 div { class: "kh-nav-links",
                     a {
-                        href: "#",
+                        href: "/browse",
                         style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); background: var(--color-brand-muted); color: var(--color-brand-foreground); font-size: var(--text-sm); font-weight: var(--font-weight-semibold); text-decoration: none;",
                         "Browse Products"
                     }
                     a {
-                        href: "#",
+                        href: "/browse",
                         style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
                         "Product Details"
                     }
                     a {
-                        href: "#",
+                        href: "/cart",
                         style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
                         "Cart"
                     }
                     a {
-                        href: "#",
+                        href: "/checkout",
                         style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
                         "Checkout & Pay"
                     }
                     a {
-                        href: "#",
+                        href: "/track",
                         style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
                         "Track Delivery"
                     }
@@ -87,13 +87,13 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
 
                 div { class: "kh-actions-row",
                     a {
-                        href: "#",
+                        href: "/browse",
                         class: "kh-btn-brand",
                         style: "height: 2.5rem; padding: 0 0.875rem;",
                         "Customer App"
                     }
                     a {
-                        href: "#",
+                        href: "/vendor",
                         class: "kh-btn-outline",
                         style: "height: 2.5rem; padding: 0 0.875rem;",
                         "Vendor & Admin"
@@ -119,31 +119,31 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                 }
                 div { class: "kh-mobile-menu-links",
                     a {
-                        href: "#",
+                        href: "/browse",
                         class: "kh-mobile-menu-link",
                         onclick: move |_| menu_open.set(false),
                         "Browse Products"
                     }
                     a {
-                        href: "#",
+                        href: "/browse",
                         class: "kh-mobile-menu-link",
                         onclick: move |_| menu_open.set(false),
                         "Product Details"
                     }
                     a {
-                        href: "#",
+                        href: "/cart",
                         class: "kh-mobile-menu-link",
                         onclick: move |_| menu_open.set(false),
                         "Cart"
                     }
                     a {
-                        href: "#",
+                        href: "/checkout",
                         class: "kh-mobile-menu-link",
                         onclick: move |_| menu_open.set(false),
                         "Checkout & Pay"
                     }
                     a {
-                        href: "#",
+                        href: "/track",
                         class: "kh-mobile-menu-link",
                         onclick: move |_| menu_open.set(false),
                         "Track Delivery"
@@ -151,13 +151,13 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                 }
                 div { class: "kh-mobile-menu-actions",
                     a {
-                        href: "#",
+                        href: "/browse",
                         class: "kh-btn-brand",
                         onclick: move |_| menu_open.set(false),
                         "Customer App"
                     }
                     a {
-                        href: "#",
+                        href: "/vendor",
                         class: "kh-btn-outline",
                         onclick: move |_| menu_open.set(false),
                         "Vendor & Admin"
