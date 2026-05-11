@@ -13,15 +13,24 @@ Dioxus app: `frontend/kolohub-web`. Design tokens: `design-system/tokens.css` + 
 - `tokens.css` is bundled via `include_str!(…/design-system/tokens.css)` and `document::Style` (injected into `<head>`).
 - Root content mounts under `class: "kh-theme"` so variables and helpers (e.g. `kh-text-gradient`) apply. Dark class toggle comes in Phase 4.
 
-## Phase 3 — Shell layout
+## Phase 3 — Shell layout (done)
 
 - Top glass nav + main content region using `kolohub_theme::dioxus` helpers (`app_shell_style`, `glass_nav_style`) or equivalent classes from `tokens.css`.
 - Responsive breakpoints aligned with the design mockups (mobile-first).
+- Added reusable Dioxus components (`TopNav`, `HeroSection`) in `frontend/kolohub-web/src/main.rs`.
+- Wired public assets (logo/banner/favicon) under `frontend/kolohub-web/public`.
 
-## Phase 4 — Theme toggle
+## Phase 4 — Theme toggle (done)
 
-- `use_signal` for `ColorScheme`; toggle `dark` on `<html>` or root (via `dioxus::document` or a root wrapper class).
-- Optional: persist choice in `localStorage` (small `use_effect` + eval or web-sys).
+- Added `use_signal(ColorScheme::Light)` in `frontend/kolohub-web/src/main.rs`.
+- Toggle button now flips light/dark at runtime by switching root class between `kh-theme` and `kh-theme dark`.
+- Theme persistence is implemented in Phase 4.1.
+
+## Phase 4.1 — Theme persistence (done)
+
+- App now reads initial theme from `localStorage` key `kolohub.theme` (web target).
+- On theme change, app writes `light`/`dark` back to `localStorage`.
+- Non-web targets gracefully default to `ColorScheme::Light`.
 
 ## Phase 5 — Hero + CTAs
 
