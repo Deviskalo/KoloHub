@@ -39,5 +39,6 @@ Dioxus app: `frontend/kolohub-web`. Design tokens: `design-system/tokens.css` + 
 - Expanded navbar to include key customer flow links from `Design-UI.png` (Browse, Details, Cart, Checkout, Track) plus Customer/Vendor entry actions.
 - Phase 5.2: responsive layout polish with desktop split preview grid and stronger KPI hierarchy in vendor/admin panels.
 - Phase 5.3: mobile navbar simplification (collapsed flow group) and dedicated five-stage customer journey strip.
+- Refactor: split `frontend/kolohub-web/src/main.rs` into component modules under `src/components/` and shared styles in `src/styles.rs`.
 
 After Phase 5, start routing (e.g. customer vs vendor shells) or shared components as separate tracks.
