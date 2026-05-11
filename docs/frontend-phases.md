@@ -8,10 +8,10 @@ Dioxus app: `frontend/kolohub-web`. Design tokens: `design-system/tokens.css` + 
 - Minimal `App` and `dioxus::launch(App)`.
 - `cargo build -p kolohub-web` checks the native/host build; for the browser bundle you need the WASM target (`rustup target add wasm32-unknown-unknown`) and [Dioxus CLI](https://dioxuslabs.com/learn/0.6/getting_started) (`dx`). From `frontend/kolohub-web`: `dx serve` (flags vary by CLI version).
 
-## Phase 2 — Global styles
+## Phase 2 — Global styles (done)
 
-- Ship `design-system/tokens.css` with the web bundle (static asset / `manganis` / `include_str!` + inject, depending on chosen Dioxus asset pattern).
-- Mount a root `div` with theme class hooks (`kh-theme`, optional `dark`) so CSS variables and utility classes apply.
+- `tokens.css` is bundled via `include_str!(…/design-system/tokens.css)` and `document::Style` (injected into `<head>`).
+- Root content mounts under `class: "kh-theme"` so variables and helpers (e.g. `kh-text-gradient`) apply. Dark class toggle comes in Phase 4.
 
 ## Phase 3 — Shell layout
 
