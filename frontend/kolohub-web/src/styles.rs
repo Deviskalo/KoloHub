@@ -274,4 +274,31 @@ pub const APP_CSS: &str = r#"
     gap: 0.7rem;
   }
 }
+.kh-hero-banner {
+  background-image: url('/images/banner-mobile.jpeg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.kh-hero-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7));
+  border-radius: inherit;
+  z-index: 0;
+}
+.kh-hero-banner > * {
+  position: relative;
+  z-index: 1;
+}
+.kh-hero-banner h1, .kh-hero-banner p, .kh-hero-banner .kh-text-muted {
+  color: #ffffff !important;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+@media (min-width: 980px) {
+  .kh-hero-banner {
+    background-image: url('/images/banner-desktop.jpeg');
+  }
+}
 "#;
