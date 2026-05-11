@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KoloHub design tokens — preview</title>
+    <link rel="stylesheet" href="./tokens.css" />
+    <style>
+      .demo-wrap {
+        max-width: 56rem;
+        margin: 0 auto;
+        padding: 6rem 1rem 4rem;
+      }
+      .demo-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+      }
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.75rem;
+        margin-top: 3rem;
+        text-align: left;
+      }
+      .swatch {
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        font-size: var(--text-xs);
+        font-weight: var(--font-weight-medium);
+        border: 1px solid var(--color-border-subtle);
+      }
+    </style>
+  </head>
+  <body class="kh-theme">
+    <div class="fixed top-4 left-1/2 z-50 w-full max-w-2xl -translate-x-1/2 px-4">
+      <nav class="kh-surface-glass flex items-center justify-between rounded-full px-4 py-2">
+        <span class="kh-text-gradient text-lg font-semibold">KoloHub</span>
+        <button
+          type="button"
+          id="theme-toggle"
+          class="rounded-md px-3 py-2 text-sm font-medium text-[var(--color-text-secondary)] hover:bg-[var(--color-brand-muted)]"
+        >
+          Toggle dark
+        </button>
+      </nav>
+    </div>
+
+    <main class="demo-wrap text-center">
+      <h1 class="kh-text-gradient mb-4 text-5xl font-bold leading-tight md:text-6xl">
+        Purple marketplace.<br />Local commerce.
+      </h1>
+      <p class="mx-auto max-w-xl text-lg text-[var(--color-text-secondary)]">
+        Tokens mirror iskalotech.netlify.app (purple gradients, glass nav) with emerald
+        accents for checkout-style actions.
+      </p>
+      <div class="demo-row">
+        <a class="kh-btn-brand" href="#">Brand (purple)</a>
+        <a class="kh-btn-accent" href="#">Commerce (emerald)</a>
+        <button type="button" class="kh-btn-outline">Outline</button>
+      </div>
+
+      <div class="swatches">
+        <div class="swatch bg-[var(--color-purple-600)] text-white">purple-600</div>
+        <div class="swatch bg-[var(--color-purple-100)] text-[var(--color-purple-900)]">purple-100</div>
+        <div class="swatch bg-[var(--color-emerald-600)] text-white">emerald-600</div>
+        <div class="swatch bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[var(--shadow-card)]">
+          surface
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.getElementById("theme-toggle").addEventListener("click", function () {
+        document.documentElement.classList.toggle("dark");
+      });
+    </script>
+  </body>
+</html>

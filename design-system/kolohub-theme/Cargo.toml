@@ -1,0 +1,10 @@
+[package]
+name = "kolohub-theme"
+version = "0.1.0"
+edition = "2021"
+description = "KoloHub design tokens as Rust constants — keep in sync with design-system/tokens.css"
+
+[features]
+default = []
+
+[dependencies]
