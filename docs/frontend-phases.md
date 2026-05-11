@@ -35,5 +35,7 @@ Dioxus app: `frontend/kolohub-web`. Design tokens: `design-system/tokens.css` + 
 ## Phase 5 — Hero + CTAs
 
 - First real marketing/home slice: gradient headline, subtitle, purple + emerald buttons, matching `design-system/preview.html` and product UI direction.
+- Refactored to align with `Design-UI.png`: Frontend Preview section + integrated design image + vendor/admin highlight cards.
+- Expanded navbar to include key customer flow links from `Design-UI.png` (Browse, Details, Cart, Checkout, Track) plus Customer/Vendor entry actions.
 
 After Phase 5, start routing (e.g. customer vs vendor shells) or shared components as separate tracks.
