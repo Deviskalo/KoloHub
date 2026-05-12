@@ -6,3 +6,4 @@ pub mod home;
 pub mod not_found;
 pub mod product;
 pub mod track;
+pub mod info;

@@ -22,7 +22,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                 style: "border-radius: var(--radius-full); padding: 0.5rem 0.75rem;",
                 div { class: "kh-brand-group",
                     img {
-                        src: "/images/logo-main.jpeg",
+                        src: "/favicon.jpeg",
                         alt: "KoloHub logo",
                         style: "width: 2rem; height: 2rem; border-radius: var(--radius-full); object-fit: cover;",
                     }

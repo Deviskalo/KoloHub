@@ -8,6 +8,13 @@ use crate::pages::{
     browse::Browse, cart::Cart, checkout::Checkout, dashboard::admin_overview::AdminOverview,
     dashboard::products::DashboardProducts, dashboard::vendor_overview::VendorOverview,
     dashboard::DashboardLayout, home::Home, not_found::NotFound, product::Product, track::Track,
+    info::seller_guidelines::SellerGuidelines,
+    info::payouts_logistics::PayoutsLogistics,
+    info::help_center::HelpCenter,
+    info::contact_us::ContactUs,
+    info::returns::Returns,
+    info::terms::Terms,
+    info::privacy::Privacy,
 };
 use crate::theme::{load_theme_from_storage, save_theme_to_storage};
 
@@ -29,6 +36,20 @@ pub enum Route {
             Checkout {},
             #[route("/track")]
             Track {},
+            #[route("/seller-guidelines")]
+            SellerGuidelines {},
+            #[route("/payouts-logistics")]
+            PayoutsLogistics {},
+            #[route("/help")]
+            HelpCenter {},
+            #[route("/contact")]
+            ContactUs {},
+            #[route("/returns")]
+            Returns {},
+            #[route("/terms")]
+            Terms {},
+            #[route("/privacy")]
+            Privacy {},
         #[end_layout]
 
         #[layout(DashboardLayout)]
