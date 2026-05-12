@@ -1,41 +1,111 @@
 use dioxus::prelude::*;
 
-/// Delivery tracking page — Phase 8.
+#[derive(Clone, PartialEq)]
+struct TrackStage {
+    label: &'static str,
+    desc: &'static str,
+    icon: &'static str,
+    done: bool,
+    active: bool,
+}
+
+/// Delivery tracking page — Phase 8.5
 #[component]
 pub fn Track() -> Element {
+    let stages = vec![
+        TrackStage {
+            label: "Order Placed",
+            desc: "We received your order.",
+            icon: "✓",
+            done: true,
+            active: false,
+        },
+        TrackStage {
+            label: "Confirmed",
+            desc: "Vendor has processed the request.",
+            icon: "✓",
+            done: true,
+            active: false,
+        },
+        TrackStage {
+            label: "Packaged",
+            desc: "Ready for pickup.",
+            icon: "📦",
+            done: false,
+            active: true,
+        },
+        TrackStage {
+            label: "In Transit",
+            desc: "Courier is on the way.",
+            icon: "🚚",
+            done: false,
+            active: false,
+        },
+        TrackStage {
+            label: "Delivered",
+            desc: "Package handed over.",
+            icon: "📍",
+            done: false,
+            active: false,
+        },
+    ];
+
     rsx! {
-        main {
-            style: "max-width: 72rem; margin: 0 auto; padding: 8rem 1rem 3rem;",
-            div {
-                style: "background: var(--color-surface-elevated); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-xl); box-shadow: var(--shadow-card); padding: 2rem; text-align: center;",
-                span { style: "font-size: 2.5rem;", "📦" }
+        main { class: "kh-main-shell",
+            div { style: "padding-top: 2rem;",
                 h1 {
-                    style: "margin: 0.75rem 0 0.5rem; font-size: var(--text-2xl); font-weight: var(--font-weight-bold); color: var(--color-text-primary);",
-                    "Track Your Delivery"
+                    style: "margin: 0 0 1.5rem; font-size: var(--text-2xl); font-weight: var(--font-weight-bold); color: var(--color-text-primary);",
+                    "Track Delivery"
                 }
-                p {
-                    style: "margin: 0 auto; max-width: 36rem; color: var(--color-text-secondary);",
-                    "Real-time order status and courier tracking is coming in Phase 8."
-                }
-                div { style: "display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; max-width: 36rem; margin: 1.5rem auto 0;",
-                    for (label, done) in [("Placed", true), ("Confirmed", true), ("Packaged", false), ("In Transit", false), ("Delivered", false)] {
-                        div {
-                            style: if done {
-                                "border: 1px solid var(--color-brand); border-radius: var(--radius-md); padding: 0.5rem 0.25rem; background: var(--color-brand-muted);"
-                            } else {
-                                "border: 1px solid var(--color-border-subtle); border-radius: var(--radius-md); padding: 0.5rem 0.25rem; background: var(--color-surface);"
-                            },
-                            p {
-                                style: "margin: 0; font-size: var(--text-xs); font-weight: var(--font-weight-semibold); color: var(--color-text-primary);",
-                                "{label}"
+
+                div { class: "kh-track-layout",
+                    // Timeline Card
+                    div { class: "kh-track-card",
+                        div { class: "kh-track-header",
+                            h2 { "Order Status" }
+                            p { "Order #KH-259834 • Arriving Tomorrow" }
+                        }
+
+                        div { class: "kh-timeline",
+                            for stage in stages {
+                                div {
+                                    class: "kh-timeline-step",
+                                    class: if stage.done { "done" } else if stage.active { "active" } else { "" },
+
+                                    div { class: "kh-timeline-icon", "{stage.icon}" }
+                                    div { class: "kh-timeline-line" }
+                                    div { class: "kh-timeline-content",
+                                        p { class: "kh-timeline-title", "{stage.label}" }
+                                        p { class: "kh-timeline-desc", "{stage.desc}" }
+                                    }
+                                }
                             }
                         }
+
+                        a {
+                            href: "/",
+                            style: "display: flex; align-items: center; justify-content: center; height: 3rem; margin-top: 2rem; border-radius: var(--radius-md); border: 1px solid var(--color-border-subtle); color: var(--color-text-primary); font-size: var(--text-sm); font-weight: var(--font-weight-semibold); text-decoration: none;",
+                            "← Back to Home"
+                        }
                     }
-                }
-                a {
-                    href: "/",
-                    style: "display: inline-flex; align-items: center; margin-top: 1.5rem; height: 2.5rem; padding: 0 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--color-border-subtle); color: var(--color-text-primary); font-size: var(--text-sm); font-weight: var(--font-weight-semibold); text-decoration: none;",
-                    "← Back to Home"
+
+                    // Courier/Map Placeholder Card
+                    div { class: "kh-track-card",
+                        div { class: "kh-track-header",
+                            h2 { "Courier Details" }
+                        }
+                        div { style: "display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem;",
+                            div { style: "width: 4rem; height: 4rem; border-radius: 50%; background: var(--color-border-subtle);" }
+                            div {
+                                p { style: "margin: 0; font-weight: var(--font-weight-semibold); color: var(--color-text-primary);", "Samson Kollie" }
+                                p { style: "margin: 0.25rem 0 0; font-size: var(--text-sm); color: var(--color-text-secondary);", "Monrovia Logistics" }
+                            }
+                        }
+                        div {
+                            style: "margin-top: 2rem; height: 16rem; background: var(--color-surface); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: var(--color-text-muted);",
+                            "[ Map View Placeholder ]"
+                        }
+                    }
                 }
             }
         }
