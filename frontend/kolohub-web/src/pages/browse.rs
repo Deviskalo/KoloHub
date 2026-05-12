@@ -16,7 +16,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Fresh Organic Tomatoes",
         vendor: "Kakata Farmers Co-op",
         price: "$4.50",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=500",
         category: "Groceries",
     },
     Product {
@@ -24,7 +24,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Tecno Spark 10 Pro",
         vendor: "Monrovia Tech Hub",
         price: "$180",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500",
         category: "Electronics",
     },
     Product {
@@ -32,7 +32,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Handwoven Liberian Shirt",
         vendor: "Heritage Apparel",
         price: "$25",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1596755094514-f87034a7a988?w=500",
         category: "Fashion",
     },
     Product {
@@ -40,7 +40,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "20kg Parboiled Rice",
         vendor: "City Provisions",
         price: "$18",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1586201375761-83865001e31c?w=500",
         category: "Groceries",
     },
     Product {
@@ -48,7 +48,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Solar Power Bank 20000mAh",
         vendor: "ElectroWorld",
         price: "$30",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1619441207978-3d326c46e2c9?w=500",
         category: "Electronics",
     },
     Product {
@@ -56,7 +56,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Locally Roasted Coffee",
         vendor: "Red Earth Roasters",
         price: "$8",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500",
         category: "Agribusiness",
     },
     Product {
@@ -64,7 +64,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Nike Air Max Sneakers",
         vendor: "StepUp Kicks",
         price: "$45",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
         category: "Fashion",
     },
     Product {
@@ -72,7 +72,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Palm Oil (1 Gallon)",
         vendor: "Mama's Kitchen",
         price: "$12",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1620706122141-6f77ddec7afc?w=500",
         category: "Groceries",
     },
     Product {
@@ -80,7 +80,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Bluetooth Speaker JBL",
         vendor: "SoundZone",
         price: "$55",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500",
         category: "Electronics",
     },
     Product {
@@ -88,7 +88,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "African Print Maxi Dress",
         vendor: "Bella Styles",
         price: "$22",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=500",
         category: "Fashion",
     },
     Product {
@@ -96,7 +96,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "100W Solar Panel",
         vendor: "GreenEnergy",
         price: "$85",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1509391366360-feaffa64d1c3?w=500",
         category: "Electronics",
     },
     Product {
@@ -104,7 +104,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Casava Flour (5kg)",
         vendor: "Local Harvest",
         price: "$6",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1589113103503-4965ef2576b5?w=500",
         category: "Agribusiness",
     },
     Product {
@@ -112,7 +112,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "MacBook Pro M2 (Refurb)",
         vendor: "Monrovia Tech Hub",
         price: "$1,200",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500",
         category: "Electronics",
     },
     Product {
@@ -120,7 +120,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Shea Butter (500g)",
         vendor: "Natural Glow",
         price: "$10",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=500",
         category: "Health & Beauty",
     },
     Product {
@@ -128,7 +128,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         title: "Organic Honey 500ml",
         vendor: "Kakata Farmers Co-op",
         price: "$5",
-        image_url: "/images/design-ui.png",
+        image_url: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500",
         category: "Groceries",
     },
 ];

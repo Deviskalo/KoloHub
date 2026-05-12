@@ -1,0 +1,9 @@
+[application]
+name = "kolohub-web"
+default_platform = "web"
+
+[web.app]
+title = "KoloHub - Liberia's Digital Marketplace"
+
+[web.config]
+base_path = "/"

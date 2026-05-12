@@ -79,7 +79,7 @@ pub fn Select(options: Vec<String>, onchange: Option<EventHandler<FormEvent>>) -
 #[component]
 pub fn Button(
     children: Element,
-    onclick: Option<EventHandler<MouseEvent>>,
+    #[props(default)] onclick: EventHandler<MouseEvent>,
     variant: Option<String>, // "brand", "outline", "accent"
 ) -> Element {
     let variant_class = match variant.as_deref() {
@@ -91,11 +91,7 @@ pub fn Button(
     rsx! {
         button {
             class: "{variant_class}",
-            onclick: move |e| {
-                if let Some(h) = onclick {
-                    h.call(e);
-                }
-            },
+            onclick: move |e| onclick.call(e),
             {children}
         }
     }

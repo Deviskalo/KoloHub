@@ -1482,6 +1482,142 @@ pub const APP_CSS: &str = r#"
   font-size: var(--text-xs);
   color: var(--color-text-secondary);
 }
+/* ─── Product Detail Page (PDP) ─── */
+.kh-pdp-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+@media (min-width: 980px) {
+  .kh-pdp-layout {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+.kh-pdp-image-main {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface-elevated);
+}
+.kh-pdp-thumbnails {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+.kh-pdp-thumb {
+  width: 5rem;
+  height: 5rem;
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.kh-pdp-thumb.active {
+  border-color: var(--color-brand);
+}
+
+.kh-pdp-info-card {
+  padding: 2.5rem;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border-subtle);
+}
+.kh-pdp-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+.kh-pdp-current-price {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-brand);
+}
+.kh-pdp-old-price {
+  font-size: 1.25rem;
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+}
+
+.kh-qty-selector {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.kh-qty-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+  cursor: pointer;
+}
+
+.kh-pdp-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.kh-pdp-feature-item {
+  text-align: center;
+  padding: 1rem;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border-subtle);
+}
+
+/* ─── PDP Tabs ─── */
+.kh-pdp-tabs {
+  margin-top: 4rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+}
+.kh-pdp-tab-btn {
+  padding: 1rem 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.kh-pdp-tab-btn.active {
+  color: var(--color-brand);
+  border-bottom-color: var(--color-brand);
+}
+.kh-pdp-tab-content {
+  padding: 2.5rem 0;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  font-size: var(--text-base);
+}
+
+/* ─── Related Products ─── */
+.kh-related-section {
+  margin: 6rem 0;
+  padding-top: 4rem;
+  border-top: 1px solid var(--color-border-subtle);
+}
+.kh-related-title {
+  font-size: 1.75rem;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
 @media (min-width: 980px) {
   .kh-vendor-spotlight {
     grid-template-columns: 1fr 1.5fr;
