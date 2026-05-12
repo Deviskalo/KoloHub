@@ -33,27 +33,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "KoloHub"
                     }
                 }
-                div { class: "kh-top-controls",
-                    button {
-                        class: "kh-btn-outline",
-                        style: "height: 2.5rem; width: 2.5rem; padding: 0; font-size: 1.1rem; line-height: 1;",
-                        onclick: move |evt| on_toggle.call(evt),
-                        aria_label: "{toggle_label}",
-                        title: "{toggle_label}",
-                        "{theme_icon}"
-                    }
-                    button {
-                        class: "kh-mobile-menu-btn",
-                        onclick: move |_| menu_open.set(!menu_open()),
-                        aria_label: "{menu_label}",
-                        title: "{menu_label}",
-                        if menu_open() {
-                            "✕"
-                        } else {
-                            "☰"
-                        }
-                    }
-                }
+
                 span { class: "kh-desktop-sep", aria_hidden: "true" }
 
                 div { class: "kh-nav-links",
@@ -63,9 +43,9 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "Browse Products"
                     }
                     a {
-                        href: "/browse",
+                        href: "/product/p-001",
                         style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
-                        "Product Details"
+                        "Sample Product"
                     }
                     a {
                         href: "/cart",
@@ -99,6 +79,28 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "Vendor & Admin"
                     }
                 }
+
+                div { class: "kh-top-controls",
+                    button {
+                        class: "kh-btn-outline",
+                        style: "height: 2.5rem; width: 2.5rem; padding: 0; font-size: 1.1rem; line-height: 1;",
+                        onclick: move |evt| on_toggle.call(evt),
+                        aria_label: "{toggle_label}",
+                        title: "{toggle_label}",
+                        "{theme_icon}"
+                    }
+                    button {
+                        class: "kh-mobile-menu-btn",
+                        onclick: move |_| menu_open.set(!menu_open()),
+                        aria_label: "{menu_label}",
+                        title: "{menu_label}",
+                        if menu_open() {
+                            "✕"
+                        } else {
+                            "☰"
+                        }
+                    }
+                }
             }
         }
         if menu_open() {
@@ -125,10 +127,10 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "Browse Products"
                     }
                     a {
-                        href: "/browse",
+                        href: "/product/p-001",
                         class: "kh-mobile-menu-link",
                         onclick: move |_| menu_open.set(false),
-                        "Product Details"
+                        "Sample Product"
                     }
                     a {
                         href: "/cart",
