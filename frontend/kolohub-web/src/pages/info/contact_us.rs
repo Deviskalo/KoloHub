@@ -15,42 +15,33 @@ pub fn ContactUs() -> Element {
                 // Left Column: Form
                 div { class: "kh-card kh-surface-glass", style: "padding: 3rem;",
                     h3 { style: "margin-top: 0; margin-bottom: 2rem;", "Send a Message" }
-                    div { style: "display: grid; gap: 1.5rem;",
-                        div {
-                            label { style: "display: block; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--color-text-secondary);", "Your Name" }
-                            input { 
-                                r#type: "text", 
-                                placeholder: "e.g. John Flomo",
-                                style: "width: 100%; padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-muted); color: var(--color-text-primary);"
+                    div { style: "display: grid; gap: 0.5rem;",
+                        crate::components::ui::FormGroup { 
+                            label: "Your Name", 
+                            crate::components::ui::Input { placeholder: "e.g. John Flomo" }
+                        }
+                        crate::components::ui::FormGroup { 
+                            label: "Phone Number", 
+                            crate::components::ui::Input { input_type: "tel", placeholder: "+231 ..." }
+                        }
+                        crate::components::ui::FormGroup { 
+                            label: "Subject", 
+                            crate::components::ui::Select { 
+                                options: vec![
+                                    "Order Issue".to_string(), 
+                                    "Vendor Inquiry".to_string(), 
+                                    "Payment Support".to_string(), 
+                                    "Other".to_string()
+                                ]
                             }
                         }
-                        div {
-                            label { style: "display: block; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--color-text-secondary);", "Phone Number" }
-                            input { 
-                                r#type: "tel", 
-                                placeholder: "+231 ...",
-                                style: "width: 100%; padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-muted); color: var(--color-text-primary);"
-                            }
+                        crate::components::ui::FormGroup { 
+                            label: "Message", 
+                            crate::components::ui::TextArea { placeholder: "How can we help you today?" }
                         }
-                        div {
-                            label { style: "display: block; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--color-text-secondary);", "Subject" }
-                            select { 
-                                style: "width: 100%; padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-muted); color: var(--color-text-primary);",
-                                option { "Order Issue" }
-                                option { "Vendor Inquiry" }
-                                option { "Payment Support" }
-                                option { "Other" }
-                            }
+                        div { style: "margin-top: 1rem;",
+                            crate::components::ui::Button { "Submit Request" }
                         }
-                        div {
-                            label { style: "display: block; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--color-text-secondary);", "Message" }
-                            textarea { 
-                                rows: "5",
-                                placeholder: "How can we help you today?",
-                                style: "width: 100%; padding: 0.75rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); background: var(--color-surface-muted); color: var(--color-text-primary);"
-                            }
-                        }
-                        button { class: "kh-btn-brand", style: "width: 100%; height: 3rem;", "Submit Request" }
                     }
                 }
 
