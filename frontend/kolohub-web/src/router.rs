@@ -16,18 +16,20 @@ use crate::theme::{load_theme_from_storage, save_theme_to_storage};
 #[rustfmt::skip]
 pub enum Route {
     #[layout(AppLayout)]
-        #[route("/")]
-        Home {},
-        #[route("/browse")]
-        Browse {},
-        #[route("/product/:id")]
-        Product { id: String },
-        #[route("/cart")]
-        Cart {},
-        #[route("/checkout")]
-        Checkout {},
-        #[route("/track")]
-        Track {},
+        #[layout(StorefrontLayout)]
+            #[route("/")]
+            Home {},
+            #[route("/browse?:query")]
+            Browse { query: String },
+            #[route("/product/:id")]
+            Product { id: String },
+            #[route("/cart")]
+            Cart {},
+            #[route("/checkout")]
+            Checkout {},
+            #[route("/track")]
+            Track {},
+        #[end_layout]
 
         #[layout(DashboardLayout)]
             #[route("/dashboard")]
@@ -65,5 +67,14 @@ fn AppLayout() -> Element {
             }
             Outlet::<Route> {}
         }
+    }
+}
+
+/// Layout wrapper that appends the global footer.
+#[component]
+fn StorefrontLayout() -> Element {
+    rsx! {
+        Outlet::<Route> {}
+        crate::components::footer::Footer {}
     }
 }

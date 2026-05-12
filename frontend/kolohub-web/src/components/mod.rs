@@ -1,4 +1,2 @@
-pub mod dashboard;
-pub mod flow_strip;
-pub mod preview;
+pub mod footer;
 pub mod top_bar;
