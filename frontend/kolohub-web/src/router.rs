@@ -5,7 +5,7 @@ use kolohub_theme::ColorScheme;
 
 use crate::components::top_bar::TopBar;
 use crate::pages::{
-    browse::Browse, cart::Cart, checkout::Checkout, dashboard::admin_overview::AdminOverview,
+    browse::Browse, category::CategoryPage, cart::Cart, checkout::Checkout, dashboard::admin_overview::AdminOverview,
     dashboard::products::DashboardProducts, dashboard::vendor_overview::VendorOverview,
     dashboard::DashboardLayout, home::Home, not_found::NotFound, product::Product, track::Track,
     info::seller_guidelines::SellerGuidelines,
@@ -28,6 +28,8 @@ pub enum Route {
             Home {},
             #[route("/browse?:query")]
             Browse { query: String },
+            #[route("/category/:name")]
+            CategoryPage { name: String },
             #[route("/product/:id")]
             Product { id: String },
             #[route("/cart")]

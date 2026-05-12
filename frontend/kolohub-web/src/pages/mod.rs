@@ -1,4 +1,5 @@
 pub mod browse;
+pub mod category;
 pub mod cart;
 pub mod checkout;
 pub mod dashboard;

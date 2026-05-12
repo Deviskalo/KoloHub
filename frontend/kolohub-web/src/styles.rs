@@ -1286,4 +1286,255 @@ pub const APP_CSS: &str = r#"
     font-size: 2rem;
   }
 }
+
+/* ─── Micro-animations ─── */
+@keyframes kh-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.kh-animate-fade-in-up {
+  animation: kh-fade-in-up 0.6s ease forwards;
+}
+
+/* ─── Advanced Search Dropdown ─── */
+.kh-search-container {
+  position: relative;
+  max-width: 32rem;
+  margin: 0 auto;
+}
+.kh-search-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: var(--color-surface-glass);
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  backdrop-filter: blur(var(--blur-glass));
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-nav);
+  z-index: 50;
+  padding: 1rem;
+  display: none;
+  animation: kh-fade-in-up 0.2s ease-out;
+}
+.kh-search-container:focus-within .kh-search-dropdown {
+  display: block;
+}
+.kh-search-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  transition: background 0.15s ease;
+}
+.kh-search-suggestion:hover {
+  background: var(--color-brand-muted);
+  color: var(--color-brand-foreground);
+}
+
+/* ─── County Hubs ─── */
+.kh-county-strip {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+.kh-county-chip {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  font-size: var(--text-xs);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.kh-county-chip:hover {
+  background: var(--color-brand);
+  transform: translateY(-1px);
+}
+
+/* ─── Flash Deals & Urgency ─── */
+.kh-flash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.kh-flash-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-brand);
+  border-radius: var(--radius-xl);
+  position: relative;
+  overflow: hidden;
+}
+.kh-flash-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: var(--color-brand);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: bold;
+  padding: 0.25rem 0.75rem;
+  border-bottom-left-radius: var(--radius-md);
+  z-index: 10;
+}
+.kh-flash-img {
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+}
+.kh-flash-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.kh-progress-bar {
+  height: 0.4rem;
+  background: var(--color-border-subtle);
+  border-radius: var(--radius-full);
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+.kh-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--color-brand), var(--color-accent));
+  border-radius: var(--radius-full);
+}
+.kh-countdown {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+.kh-countdown-unit {
+  background: var(--color-surface);
+  padding: 0.15rem 0.35rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.7rem;
+  font-weight: bold;
+  color: var(--color-brand);
+}
+
+/* ─── Featured Vendor ─── */
+.kh-vendor-spotlight {
+  margin: 6rem 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.kh-vendor-profile-card {
+  background: var(--color-surface-glass);
+  -webkit-backdrop-filter: blur(var(--blur-glass));
+  backdrop-filter: blur(var(--blur-glass));
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-nav);
+}
+.kh-vendor-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+.kh-vendor-avatar {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-brand);
+  object-fit: cover;
+}
+.kh-vendor-stats {
+  display: flex;
+  gap: 1.5rem;
+}
+.kh-vendor-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+.kh-vendor-stat-val {
+  font-size: var(--text-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+.kh-vendor-stat-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-secondary);
+}
+@media (min-width: 980px) {
+  .kh-vendor-spotlight {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+/* ─── Testimonials ─── */
+.kh-testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 4rem 0;
+}
+.kh-testimonial-card {
+  padding: 2rem;
+  background: var(--color-surface-elevated);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.kh-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+.kh-testimonial-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-full);
+  object-fit: cover;
+}
+
+/* ─── Newsletter ─── */
+.kh-newsletter-section {
+  margin: 6rem 0;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, var(--color-brand-muted), var(--color-surface-elevated));
+  border-radius: var(--radius-2xl);
+  text-align: center;
+  border: 1px solid var(--color-brand-muted);
+}
+.kh-newsletter-form {
+  max-width: 30rem;
+  margin: 2rem auto 0;
+  display: flex;
+  gap: 0.5rem;
+}
+@media (max-width: 480px) {
+  .kh-newsletter-form {
+    flex-direction: column;
+  }
+}
 "#;

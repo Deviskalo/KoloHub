@@ -7,6 +7,7 @@ pub struct Product {
     pub vendor: &'static str,
     pub price: &'static str,
     pub image_url: &'static str,
+    pub category: &'static str,
 }
 
 pub const MOCK_PRODUCTS: &[Product] = &[
@@ -16,6 +17,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "Kakata Farmers Co-op",
         price: "$4.50",
         image_url: "/images/design-ui.png",
+        category: "Groceries",
     },
     Product {
         id: "p-002",
@@ -23,6 +25,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "Monrovia Tech Hub",
         price: "$180",
         image_url: "/images/design-ui.png",
+        category: "Electronics",
     },
     Product {
         id: "p-003",
@@ -30,6 +33,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "Heritage Apparel",
         price: "$25",
         image_url: "/images/design-ui.png",
+        category: "Fashion",
     },
     Product {
         id: "p-004",
@@ -37,6 +41,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "City Provisions",
         price: "$18",
         image_url: "/images/design-ui.png",
+        category: "Groceries",
     },
     Product {
         id: "p-005",
@@ -44,6 +49,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "ElectroWorld",
         price: "$30",
         image_url: "/images/design-ui.png",
+        category: "Electronics",
     },
     Product {
         id: "p-006",
@@ -51,6 +57,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "Red Earth Roasters",
         price: "$8",
         image_url: "/images/design-ui.png",
+        category: "Agribusiness",
     },
     Product {
         id: "p-007",
@@ -58,6 +65,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "StepUp Kicks",
         price: "$45",
         image_url: "/images/design-ui.png",
+        category: "Fashion",
     },
     Product {
         id: "p-008",
@@ -65,6 +73,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "Mama's Kitchen",
         price: "$12",
         image_url: "/images/design-ui.png",
+        category: "Groceries",
     },
     Product {
         id: "p-009",
@@ -72,6 +81,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "SoundZone",
         price: "$55",
         image_url: "/images/design-ui.png",
+        category: "Electronics",
     },
     Product {
         id: "p-010",
@@ -79,6 +89,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "Bella Styles",
         price: "$22",
         image_url: "/images/design-ui.png",
+        category: "Fashion",
     },
     Product {
         id: "p-011",
@@ -86,6 +97,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "GreenEnergy",
         price: "$85",
         image_url: "/images/design-ui.png",
+        category: "Electronics",
     },
     Product {
         id: "p-012",
@@ -93,20 +105,23 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "Local Harvest",
         price: "$6",
         image_url: "/images/design-ui.png",
+        category: "Agribusiness",
     },
     Product {
         id: "p-013",
         title: "MacBook Pro M2 (Refurb)",
         vendor: "Monrovia Tech Hub",
-        price: "$950",
+        price: "$1,200",
         image_url: "/images/design-ui.png",
+        category: "Electronics",
     },
     Product {
         id: "p-014",
-        title: "Handmade Leather Sandals",
-        vendor: "Heritage Apparel",
-        price: "$15",
+        title: "Shea Butter (500g)",
+        vendor: "Natural Glow",
+        price: "$10",
         image_url: "/images/design-ui.png",
+        category: "Health & Beauty",
     },
     Product {
         id: "p-015",
@@ -114,6 +129,7 @@ pub const MOCK_PRODUCTS: &[Product] = &[
         vendor: "Kakata Farmers Co-op",
         price: "$5",
         image_url: "/images/design-ui.png",
+        category: "Groceries",
     },
 ];
 
