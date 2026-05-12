@@ -73,7 +73,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "Customer App"
                     }
                     a {
-                        href: "/vendor",
+                        href: "/dashboard",
                         class: "kh-btn-outline",
                         style: "height: 2.5rem; padding: 0 0.875rem;",
                         "Vendor & Admin"
@@ -159,7 +159,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "Customer App"
                     }
                     a {
-                        href: "/vendor",
+                        href: "/dashboard",
                         class: "kh-btn-outline",
                         onclick: move |_| menu_open.set(false),
                         "Vendor & Admin"

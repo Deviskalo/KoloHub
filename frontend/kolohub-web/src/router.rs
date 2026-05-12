@@ -5,8 +5,9 @@ use kolohub_theme::ColorScheme;
 
 use crate::components::top_bar::TopBar;
 use crate::pages::{
-    browse::Browse, cart::Cart, checkout::Checkout, home::Home, not_found::NotFound,
-    product::Product, track::Track, vendor::Vendor,
+    browse::Browse, cart::Cart, checkout::Checkout, dashboard::admin_overview::AdminOverview,
+    dashboard::products::DashboardProducts, dashboard::vendor_overview::VendorOverview,
+    dashboard::DashboardLayout, home::Home, not_found::NotFound, product::Product, track::Track,
 };
 use crate::theme::{load_theme_from_storage, save_theme_to_storage};
 
@@ -27,8 +28,15 @@ pub enum Route {
         Checkout {},
         #[route("/track")]
         Track {},
-        #[route("/vendor")]
-        Vendor {},
+
+        #[layout(DashboardLayout)]
+            #[route("/dashboard")]
+            VendorOverview {},
+            #[route("/dashboard/products")]
+            DashboardProducts {},
+            #[route("/dashboard/admin")]
+            AdminOverview {},
+        #[end_layout]
     #[end_layout]
     #[route("/:..route")]
     NotFound { route: Vec<String> },
