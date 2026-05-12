@@ -6,7 +6,6 @@ use dioxus::prelude::*;
 pub fn Product(id: String) -> Element {
     let mut qty = use_signal(|| 1);
     let mut active_tab = use_signal(|| "description");
-    let nav = use_navigator();
     
     // Find product in mocks
     let product = MOCK_PRODUCTS.iter().find(|p| p.id == id);

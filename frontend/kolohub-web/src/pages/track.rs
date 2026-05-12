@@ -1,3 +1,4 @@
+use crate::router::Route;
 use dioxus::prelude::*;
 
 #[derive(Clone, PartialEq)]
@@ -9,41 +10,40 @@ struct TrackStage {
     active: bool,
 }
 
-/// Delivery tracking page — Phase 8.5
 #[component]
 pub fn Track() -> Element {
     let stages = vec![
         TrackStage {
             label: "Order Placed",
-            desc: "We received your order.",
+            desc: "April 12, 2026 • 09:15 AM",
             icon: "✓",
             done: true,
             active: false,
         },
         TrackStage {
             label: "Confirmed",
-            desc: "Vendor has processed the request.",
+            desc: "Vendor accepted your order",
             icon: "✓",
             done: true,
             active: false,
         },
         TrackStage {
-            label: "Packaged",
-            desc: "Ready for pickup.",
+            label: "Processing",
+            desc: "Preparing your items",
             icon: "📦",
             done: false,
             active: true,
         },
         TrackStage {
-            label: "In Transit",
-            desc: "Courier is on the way.",
+            label: "On the Way",
+            desc: "Courier is heading to you",
             icon: "🚚",
             done: false,
             active: false,
         },
         TrackStage {
             label: "Delivered",
-            desc: "Package handed over.",
+            desc: "Package at your door",
             icon: "📍",
             done: false,
             active: false,
@@ -52,18 +52,18 @@ pub fn Track() -> Element {
 
     rsx! {
         main { class: "kh-main-shell",
-            div { style: "padding-top: 2rem;",
-                h1 {
-                    style: "margin: 0 0 1.5rem; font-size: var(--text-2xl); font-weight: var(--font-weight-bold); color: var(--color-text-primary);",
-                    "Track Delivery"
+            div { class: "kh-animate-fade-in-up",
+                div { style: "display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2.5rem; border-bottom: 1px solid var(--color-border-subtle); padding-bottom: 1rem;",
+                    h1 { style: "margin: 0; font-size: 2.5rem; font-weight: var(--font-weight-bold);", "Track Order" }
+                    span { style: "color: var(--color-brand); font-weight: bold;", "Order #KH-259834" }
                 }
 
                 div { class: "kh-track-layout",
                     // Timeline Card
                     div { class: "kh-track-card",
                         div { class: "kh-track-header",
-                            h2 { "Order Status" }
-                            p { "Order #KH-259834 • Arriving Tomorrow" }
+                            h2 { "Delivery Progress" }
+                            p { "Estimated Delivery: Tomorrow, 2:00 PM - 4:00 PM" }
                         }
 
                         div { class: "kh-timeline",
@@ -82,28 +82,54 @@ pub fn Track() -> Element {
                             }
                         }
 
-                        a {
-                            href: "/",
-                            style: "display: flex; align-items: center; justify-content: center; height: 3rem; margin-top: 2rem; border-radius: var(--radius-md); border: 1px solid var(--color-border-subtle); color: var(--color-text-primary); font-size: var(--text-sm); font-weight: var(--font-weight-semibold); text-decoration: none;",
-                            "← Back to Home"
+                        div { style: "margin-top: 3rem;",
+                            Link { to: Route::Home {},
+                                crate::components::ui::Button { variant: "outline", "← Back to Marketplace" }
+                            }
                         }
                     }
 
-                    // Courier/Map Placeholder Card
-                    div { class: "kh-track-card",
-                        div { class: "kh-track-header",
-                            h2 { "Courier Details" }
-                        }
-                        div { style: "display: flex; align-items: center; gap: 1rem; margin-top: 1.5rem;",
-                            div { style: "width: 4rem; height: 4rem; border-radius: 50%; background: var(--color-border-subtle);" }
-                            div {
-                                p { style: "margin: 0; font-weight: var(--font-weight-semibold); color: var(--color-text-primary);", "Samson Kollie" }
-                                p { style: "margin: 0.25rem 0 0; font-size: var(--text-sm); color: var(--color-text-secondary);", "Monrovia Logistics" }
+                    // Side Column: Courier & Map
+                    div { style: "display: flex; flex-direction: column; gap: 2rem;",
+                        // Courier Card
+                        div { class: "kh-track-card",
+                            div { class: "kh-track-header",
+                                h2 { "Your Courier" }
+                            }
+                            div { style: "display: flex; align-items: center; gap: 1.5rem;",
+                                img { 
+                                    class: "kh-courier-avatar",
+                                    src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200",
+                                    alt: "Courier Avatar"
+                                }
+                                div {
+                                    p { style: "margin: 0; font-size: 1.15rem; font-weight: bold; color: var(--color-text-primary);", "Samson Kollie" }
+                                    p { style: "margin: 0.25rem 0 0; font-size: var(--text-sm); color: var(--color-text-secondary);", "Verified Courier • 4.9 ★" }
+                                    div { style: "margin-top: 0.75rem; display: flex; gap: 0.5rem;",
+                                        button { style: "padding: 0.4rem 0.8rem; border-radius: var(--radius-md); border: 1px solid var(--color-brand); background: none; color: var(--color-brand); font-size: 0.75rem; font-weight: bold; cursor: pointer;",
+                                            "Message"
+                                        }
+                                        button { style: "padding: 0.4rem 0.8rem; border-radius: var(--radius-md); background: var(--color-brand); border: none; color: #fff; font-size: 0.75rem; font-weight: bold; cursor: pointer;",
+                                            "Call"
+                                        }
+                                    }
+                                }
                             }
                         }
-                        div {
-                            style: "margin-top: 2rem; height: 16rem; background: var(--color-surface); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; color: var(--color-text-muted);",
-                            "[ Map View Placeholder ]"
+
+                        // Live Map Card
+                        div { class: "kh-track-card",
+                            div { class: "kh-track-header",
+                                h2 { "Live Tracking" }
+                            }
+                            div {
+                                style: "height: 300px; background: linear-gradient(135deg, var(--color-surface), var(--color-surface-elevated)); border: 1px solid var(--color-border-subtle); border-radius: var(--radius-xl); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--color-text-muted); position: relative; overflow: hidden;",
+                                // Simple visual for a map
+                                div { style: "position: absolute; width: 100%; height: 100%; opacity: 0.1; background-image: radial-gradient(var(--color-brand) 1px, transparent 1px); background-size: 20px 20px;" }
+                                span { style: "font-size: 3rem; margin-bottom: 1rem; z-index: 1;", "📍" }
+                                p { style: "font-size: 0.85rem; font-weight: bold; z-index: 1;", "Connecting to GPS..." }
+                                p { style: "font-size: 0.7rem; z-index: 1;", "Real-time tracking available soon" }
+                            }
                         }
                     }
                 }

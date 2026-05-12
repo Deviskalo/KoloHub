@@ -1,4 +1,4 @@
-use crate::pages::browse::{Product, ProductCard, MOCK_PRODUCTS};
+use crate::pages::browse::{ProductCard, MOCK_PRODUCTS};
 use dioxus::prelude::*;
 
 #[component]
