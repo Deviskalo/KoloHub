@@ -6,11 +6,14 @@ use kolohub_theme::ColorScheme;
 use crate::components::top_bar::TopBar;
 use crate::pages::{
     account::addresses::AccountAddresses,
+    account::help_center::AccountHelp,
     account::order_details::AccountOrderDetails,
     account::orders::AccountOrders,
     account::payments::AccountPayments,
     account::profile::AccountProfile,
+    account::reviews::AccountReviews,
     account::security::AccountSecurity,
+    account::wishlist::AccountWishlist,
     account::AccountLayout,
     browse::Browse,
     cart::Cart,
@@ -85,6 +88,12 @@ pub enum Route {
             AccountSecurity {},
             #[route("/account/payments")]
             AccountPayments {},
+            #[route("/account/wishlist")]
+            AccountWishlist {},
+            #[route("/account/reviews")]
+            AccountReviews {},
+            #[route("/account/help")]
+            AccountHelp {},
         #[end_layout]
 
         #[layout(DashboardLayout)]

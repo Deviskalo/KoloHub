@@ -1,9 +1,12 @@
 pub mod addresses;
+pub mod help_center;
 pub mod order_details;
 pub mod orders;
 pub mod payments;
 pub mod profile;
+pub mod reviews;
 pub mod security;
+pub mod wishlist;
 
 use crate::router::Route;
 use dioxus::prelude::*;
@@ -57,6 +60,27 @@ pub fn AccountLayout() -> Element {
                             active_class: "active",
                             span { "🔒" }
                             "Security"
+                        }
+                        Link {
+                            to: Route::AccountWishlist {},
+                            class: "kh-account-link",
+                            active_class: "active",
+                            span { "❤️" }
+                            "Wishlist"
+                        }
+                        Link {
+                            to: Route::AccountReviews {},
+                            class: "kh-account-link",
+                            active_class: "active",
+                            span { "★" }
+                            "My Reviews"
+                        }
+                        Link {
+                            to: Route::AccountHelp {},
+                            class: "kh-account-link",
+                            active_class: "active",
+                            span { "❓" }
+                            "Help Center"
                         }
                         div { style: "margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--color-border-subtle);",
                             button {
