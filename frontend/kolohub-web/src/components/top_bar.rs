@@ -55,7 +55,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "Checkout & Pay"
                     }
                     a {
-                        href: "/track",
+                        href: "/account/track",
                         style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
                         "Track Delivery"
                     }
@@ -136,7 +136,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "Checkout & Pay"
                     }
                     a {
-                        href: "/track",
+                        href: "/account/track",
                         class: "kh-mobile-menu-link",
                         onclick: move |_| menu_open.set(false),
                         "Track Delivery"

@@ -11,7 +11,7 @@ struct TrackStage {
 }
 
 #[component]
-pub fn Track() -> Element {
+pub fn AccountTrack() -> Element {
     let stages = vec![
         TrackStage {
             label: "Order Placed",
@@ -97,7 +97,7 @@ pub fn Track() -> Element {
                                 h2 { "Your Courier" }
                             }
                             div { style: "display: flex; align-items: center; gap: 1.5rem;",
-                                img { 
+                                img {
                                     class: "kh-courier-avatar",
                                     src: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200",
                                     alt: "Courier Avatar"

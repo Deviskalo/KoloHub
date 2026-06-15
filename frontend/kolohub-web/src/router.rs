@@ -37,7 +37,7 @@ use crate::pages::{
     info::terms::Terms,
     not_found::NotFound,
     product::Product,
-    track::Track,
+    track::AccountTrack,
 };
 use crate::theme::{load_theme_from_storage, save_theme_to_storage};
 
@@ -59,8 +59,6 @@ pub enum Route {
             Cart {},
             #[route("/checkout")]
             Checkout {},
-            #[route("/track")]
-            Track {},
             #[route("/seller-guidelines")]
             SellerGuidelines {},
             #[route("/payouts-logistics")]
@@ -100,6 +98,8 @@ pub enum Route {
             AccountRewards {},
             #[route("/account/settings")]
             AccountSettings {},
+            #[route("/account/track")]
+            AccountTrack {},
         #[end_layout]
 
         #[layout(DashboardLayout)]

@@ -2304,24 +2304,92 @@ pub const APP_CSS: &str = r#"
   height: fit-content;
 }
 
+/* --- Modern Grouped Account Sidebar --- */
+.kh-account-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.kh-sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.kh-sidebar-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+  padding-left: 0.75rem;
+}
+
 .kh-account-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.875rem;
   padding: 0.75rem 1rem;
-  border-radius: var(--radius-lg);
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
-  transition: all 0.2s;
   text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-lg);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
 }
+.kh-account-link span {
+  font-size: 1.1rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
 .kh-account-link:hover {
   background: var(--color-surface);
-  color: var(--color-brand);
+  color: var(--color-text-primary);
 }
+.kh-account-link:hover span {
+  opacity: 1;
+}
+
 .kh-account-link.active {
   background: var(--color-brand-muted);
   color: var(--color-brand);
+  font-weight: var(--font-weight-bold);
+  border-color: rgba(var(--color-brand-rgb), 0.1);
+}
+.kh-account-link.active span {
+  opacity: 1;
+}
+
+/* Sidebar Identity Header */
+.kh-sidebar-identity {
+  padding: 0 0.75rem 1.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.kh-sidebar-avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-brand-muted);
+  object-fit: cover;
+}
+.kh-sidebar-info h4 {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+.kh-sidebar-info p {
+  margin: 0.15rem 0 0;
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
 }
 
 .kh-order-history-item {

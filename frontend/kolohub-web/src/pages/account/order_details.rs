@@ -38,7 +38,7 @@ pub fn AccountOrderDetails(id: String) -> Element {
                                 }
                             }
                         }
-                        
+
                         div { style: "padding: 2rem; background: var(--color-surface); border-top: 1px solid var(--color-border-subtle);",
                             div { style: "display: flex; flex-direction: column; gap: 0.75rem;",
                                 div { style: "display: flex; justify-content: space-between; font-size: var(--text-sm);",
@@ -64,7 +64,7 @@ pub fn AccountOrderDetails(id: String) -> Element {
                         div { class: "kh-dash-card-header", "Delivery Address" }
                         div { style: "padding: 1.5rem;",
                             p { style: "font-weight: var(--font-weight-bold); margin-bottom: 0.5rem;", "Johnathan Doe" }
-                            p { style: "font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.5;", 
+                            p { style: "font-size: var(--text-sm); color: var(--color-text-secondary); line-height: 1.5;",
                                 "House 24, Airfield Shortcut"
                                 br {}
                                 "Sinkor, Monrovia"
@@ -91,7 +91,7 @@ pub fn AccountOrderDetails(id: String) -> Element {
                         div { style: "padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;",
                             crate::components::ui::Button { variant: "brand", style_attr: "width: 100%;", "Download Invoice" }
                             crate::components::ui::Button { variant: "outline", style_attr: "width: 100%;", "Reorder Items" }
-                            Link { to: Route::Track {},
+                            Link { to: Route::AccountTrack {},
                                 crate::components::ui::Button { variant: "accent", style_attr: "width: 100%;", "Track Shipment" }
                             }
                         }

@@ -4,9 +4,27 @@ use dioxus::prelude::*;
 #[component]
 pub fn AccountOrders() -> Element {
     let mock_orders = [
-        ("#KH-4501", "May 12, 2026", "LRD 4,500", "In Transit", "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200"),
-        ("#KH-4498", "May 08, 2026", "LRD 1,200", "Delivered", "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=200"),
-        ("#KH-4492", "Apr 28, 2026", "LRD 180", "Delivered", "https://images.unsplash.com/photo-1619441207978-3d326c46e2c9?w=200"),
+        (
+            "#KH-4501",
+            "May 12, 2026",
+            "LRD 4,500",
+            "In Transit",
+            "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=200",
+        ),
+        (
+            "#KH-4498",
+            "May 08, 2026",
+            "LRD 1,200",
+            "Delivered",
+            "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=200",
+        ),
+        (
+            "#KH-4492",
+            "Apr 28, 2026",
+            "LRD 180",
+            "Delivered",
+            "https://images.unsplash.com/photo-1619441207978-3d326c46e2c9?w=200",
+        ),
     ];
 
     rsx! {
@@ -15,9 +33,9 @@ pub fn AccountOrders() -> Element {
                 for (id, date, total, status, img) in mock_orders {
                     div { class: "kh-order-history-item",
                         div { style: "display: flex; gap: 1.5rem; align-items: center;",
-                            img { 
-                                src: "{img}", 
-                                style: "width: 5rem; height: 5rem; border-radius: var(--radius-lg); object-fit: cover; border: 1px solid var(--color-border-subtle);" 
+                            img {
+                                src: "{img}",
+                                style: "width: 5rem; height: 5rem; border-radius: var(--radius-lg); object-fit: cover; border: 1px solid var(--color-border-subtle);"
                             }
                             div {
                                 p { style: "margin: 0; font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em;", "Order {id}" }
@@ -25,16 +43,16 @@ pub fn AccountOrders() -> Element {
                                 p { style: "margin: 0; font-weight: var(--font-weight-semibold); color: var(--color-brand);", "{total}" }
                             }
                         }
-                        
+
                         div { style: "display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem;",
-                            span { 
+                            span {
                                 class: "kh-badge-status",
                                 class: if status == "In Transit" { "warning" } else { "success" },
-                                "{status}" 
+                                "{status}"
                             }
                             div { style: "display: flex; gap: 0.5rem;",
                                 if status == "In Transit" {
-                                    Link { to: Route::Track {},
+                                    Link { to: Route::AccountTrack {},
                                         crate::components::ui::Button { variant: "brand", "Track Order" }
                                     }
                                 }
