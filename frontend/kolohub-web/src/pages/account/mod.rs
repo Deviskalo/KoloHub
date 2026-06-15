@@ -5,7 +5,9 @@ pub mod orders;
 pub mod payments;
 pub mod profile;
 pub mod reviews;
+pub mod rewards;
 pub mod security;
+pub mod settings;
 pub mod wishlist;
 
 use crate::router::Route;
@@ -81,6 +83,20 @@ pub fn AccountLayout() -> Element {
                             active_class: "active",
                             span { "❓" }
                             "Help Center"
+                        }
+                        Link {
+                            to: Route::AccountRewards {},
+                            class: "kh-account-link",
+                            active_class: "active",
+                            span { "💎" }
+                            "Kolo Rewards"
+                        }
+                        Link {
+                            to: Route::AccountSettings {},
+                            class: "kh-account-link",
+                            active_class: "active",
+                            span { "⚙️" }
+                            "App Settings"
                         }
                         div { style: "margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--color-border-subtle);",
                             button {

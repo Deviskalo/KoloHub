@@ -12,7 +12,9 @@ use crate::pages::{
     account::payments::AccountPayments,
     account::profile::AccountProfile,
     account::reviews::AccountReviews,
+    account::rewards::AccountRewards,
     account::security::AccountSecurity,
+    account::settings::AccountSettings,
     account::wishlist::AccountWishlist,
     account::AccountLayout,
     browse::Browse,
@@ -94,6 +96,10 @@ pub enum Route {
             AccountReviews {},
             #[route("/account/help")]
             AccountHelp {},
+            #[route("/account/rewards")]
+            AccountRewards {},
+            #[route("/account/settings")]
+            AccountSettings {},
         #[end_layout]
 
         #[layout(DashboardLayout)]
