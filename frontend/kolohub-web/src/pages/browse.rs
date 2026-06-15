@@ -1,3 +1,4 @@
+use crate::router::Route;
 use dioxus::prelude::*;
 
 #[derive(Clone, PartialEq)]
@@ -8,6 +9,12 @@ pub struct Product {
     pub price: &'static str,
     pub image_url: &'static str,
     pub category: &'static str,
+}
+
+impl Product {
+    pub fn price_val(&self) -> f64 {
+        self.price.trim_start_matches('$').replace(',', "").parse().unwrap_or(0.0)
+    }
 }
 
 pub const MOCK_PRODUCTS: &[Product] = &[
@@ -136,9 +143,9 @@ pub const MOCK_PRODUCTS: &[Product] = &[
 #[component]
 pub fn ProductCard(product: Product) -> Element {
     rsx! {
-        a {
+        Link {
+            to: Route::Product { id: product.id.to_string() },
             class: "kh-product-card",
-            href: "/product/{product.id}",
             img { class: "kh-product-image", src: "{product.image_url}", alt: "{product.title}" }
             div { class: "kh-product-details",
                 p { class: "kh-product-title", "{product.title}" }
@@ -159,70 +166,135 @@ pub fn ProductCard(product: Product) -> Element {
     }
 }
 
-/// Product browse page — Phase 8.1
 #[component]
 pub fn Browse(query: String) -> Element {
-    let mut selected_category = use_signal(|| "All".to_string());
-
     let mut search_query = use_signal(|| query.clone());
+    let mut selected_category = use_signal(|| "All".to_string());
+    let mut sort_by = use_signal(|| "Featured".to_string());
+    let mut min_price = use_signal(|| 0.0);
+    let mut max_price = use_signal(|| 2000.0);
 
     let categories = [
         "All",
         "Groceries",
         "Electronics",
         "Fashion",
-        "Home & Garden",
+        "Agribusiness",
+        "Health & Beauty",
     ];
 
-    let display_products = MOCK_PRODUCTS.iter().filter(|p| {
+    let mut display_products: Vec<Product> = MOCK_PRODUCTS.iter().filter(|p| {
         let matches_search = search_query().is_empty()
-            || p.title
-                .to_lowercase()
-                .contains(&search_query().to_lowercase())
-            || p.vendor
-                .to_lowercase()
-                .contains(&search_query().to_lowercase());
+            || p.title.to_lowercase().contains(&search_query().to_lowercase())
+            || p.vendor.to_lowercase().contains(&search_query().to_lowercase());
 
-        matches_search
-    });
+        let matches_category = selected_category() == "All" || p.category == selected_category();
+        let matches_price = p.price_val() >= min_price() && p.price_val() <= max_price();
+
+        matches_search && matches_category && matches_price
+    }).cloned().collect();
+
+    // Sorting logic
+    match sort_by().as_str() {
+        "Price: Low to High" => display_products.sort_by(|a, b| a.price_val().partial_cmp(&b.price_val()).unwrap()),
+        "Price: High to Low" => display_products.sort_by(|a, b| b.price_val().partial_cmp(&a.price_val()).unwrap()),
+        _ => {}
+    }
 
     rsx! {
         main { class: "kh-main-shell",
-            div { style: "display: flex; flex-direction: column; gap: 0.5rem;",
-
-                div { style: "display: flex; flex-direction: column; gap: 1rem; margin-bottom: 0.5rem;",
-                    h1 {
-                        style: "margin: 0; font-size: var(--text-2xl); font-weight: var(--font-weight-bold); color: var(--color-text-primary);",
-                        "Browse Products"
-                    }
-                    div { class: "kh-search-wrapper", style: "margin: 0; max-width: 100%;",
+            div { class: "kh-animate-fade-in-up",
+                div { style: "margin-bottom: 2.5rem;",
+                    h1 { style: "font-size: 2.5rem; font-weight: var(--font-weight-bold); margin: 0 0 1rem;", "Find Everything" }
+                    div { class: "kh-search-wrapper", style: "max-width: 100%;",
                         input {
                             class: "kh-search-input",
-                            placeholder: "Search catalog...",
+                            placeholder: "Search for electronics, fashion, groceries...",
                             value: "{search_query}",
                             oninput: move |evt| search_query.set(evt.value())
                         }
                     }
                 }
 
-                // Category Strip
-                div { class: "kh-category-strip",
-                    for cat in categories {
-                        button {
-                            class: "kh-category-chip",
-                            class: if selected_category() == cat { "active" },
-                            onclick: move |_| selected_category.set(cat.to_string()),
-                            "{cat}"
+                div { class: "kh-browse-layout",
+                    // Sidebar Filters
+                    aside { class: "kh-filter-sidebar",
+                        div { class: "kh-filter-section",
+                            h3 { class: "kh-filter-title", "Categories" }
+                            div { style: "display: flex; flex-direction: column; gap: 0.5rem;",
+                                for cat in categories {
+                                    button {
+                                        style: "text-align: left; background: none; border: none; padding: 0.5rem; cursor: pointer; border-radius: var(--radius-md); font-size: var(--text-sm);",
+                                        style: if selected_category() == cat { "background: var(--color-brand-muted); color: var(--color-brand); font-weight: bold;" },
+                                        onclick: move |_| selected_category.set(cat.to_string()),
+                                        "{cat}"
+                                    }
+                                }
+                            }
+                        }
+
+                        div { class: "kh-filter-section",
+                            h3 { class: "kh-filter-title", "Price Range" }
+                            div { class: "kh-price-inputs",
+                                input { 
+                                    class: "kh-price-input", 
+                                    r#type: "number", 
+                                    placeholder: "Min",
+                                    oninput: move |evt| min_price.set(evt.value().parse().unwrap_or(0.0))
+                                }
+                                span { style: "color: var(--color-text-muted);", "—" }
+                                input { 
+                                    class: "kh-price-input", 
+                                    r#type: "number", 
+                                    placeholder: "Max",
+                                    oninput: move |evt| max_price.set(evt.value().parse().unwrap_or(2000.0))
+                                }
+                            }
+                        }
+
+                        button { 
+                            class: "kh-sidebar-link", 
+                            style: "justify-content: center; margin-top: 1rem; border: 1px solid var(--color-border-subtle);",
+                            onclick: move |_| {
+                                selected_category.set("All".to_string());
+                                min_price.set(0.0);
+                                max_price.set(2000.0);
+                            },
+                            "Clear All" 
                         }
                     }
-                }
 
-                p { style: "color: var(--color-text-secondary);", "Showing results: {display_products.clone().count()}"}
+                    // Content Area
+                    div {
+                        div { class: "kh-sort-bar",
+                            p { style: "font-weight: var(--font-weight-semibold); color: var(--color-text-secondary); margin: 0;", 
+                                "Showing {display_products.len()} results" 
+                            }
+                            div { style: "display: flex; align-items: center; gap: 0.75rem;",
+                                span { style: "font-size: var(--text-sm); color: var(--color-text-muted);", "Sort by:" }
+                                select { 
+                                    style: "padding: 0.4rem; border-radius: var(--radius-md); border: 1px solid var(--color-border-subtle); background: var(--color-surface); font-size: var(--text-sm);",
+                                    onchange: move |evt| sort_by.set(evt.value()),
+                                    option { "Featured" }
+                                    option { "Price: Low to High" }
+                                    option { "Price: High to Low" }
+                                }
+                            }
+                        }
 
-                // Product Grid
-                div { class: "kh-product-grid",
-                    for p in display_products {
-                        ProductCard { product: p.clone() }
+                        if display_products.is_empty() {
+                            div { style: "text-align: center; padding: 6rem 2rem; background: var(--color-surface-elevated); border-radius: var(--radius-2xl); border: 2px dashed var(--color-border-subtle);",
+                                span { style: "font-size: 3rem; display: block; margin-bottom: 1rem;", "🔍" }
+                                h2 { "No results found" }
+                                p { style: "color: var(--color-text-secondary);", "Try adjusting your filters or search query." }
+                            }
+                        } else {
+                            div { class: "kh-product-grid",
+                                for p in display_products {
+                                    ProductCard { product: p.clone() }
+                                }
+                            }
+                        }
                     }
                 }
             }

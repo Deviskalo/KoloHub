@@ -22,9 +22,9 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                 style: "border-radius: var(--radius-full); padding: 0.5rem 0.75rem;",
                 div { class: "kh-brand-group",
                     img {
-                        src: "/favicon.jpeg",
+                        src: "/logo.webp",
                         alt: "KoloHub logo",
-                        style: "width: 2rem; height: 2rem; border-radius: var(--radius-full); object-fit: cover;",
+                        style: "width: 2.5rem; height: 2.5rem; border-radius: var(--radius-full); object-fit: contain;",
                     }
                     a {
                         href: "/",
@@ -36,16 +36,13 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
 
                 span { class: "kh-desktop-sep", aria_hidden: "true" }
 
-                div { class: "kh-nav-links",
+                div {
+                    class: "kh-nav-links",
+                    style: "justify-content: center; align-items: center; display: flex; ",
                     a {
                         href: "/browse",
                         style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); background: var(--color-brand-muted); color: var(--color-brand-foreground); font-size: var(--text-sm); font-weight: var(--font-weight-semibold); text-decoration: none;",
                         "Browse Products"
-                    }
-                    a {
-                        href: "/product/p-001",
-                        style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
-                        "Sample Product"
                     }
                     a {
                         href: "/cart",
@@ -67,10 +64,10 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
 
                 div { class: "kh-actions-row",
                     a {
-                        href: "/browse",
+                        href: "/account",
                         class: "kh-btn-brand",
                         style: "height: 2.5rem; padding: 0 0.875rem;",
-                        "Customer App"
+                        "My Account"
                     }
                     a {
                         href: "/dashboard",
@@ -127,12 +124,6 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "Browse Products"
                     }
                     a {
-                        href: "/product/p-001",
-                        class: "kh-mobile-menu-link",
-                        onclick: move |_| menu_open.set(false),
-                        "Sample Product"
-                    }
-                    a {
                         href: "/cart",
                         class: "kh-mobile-menu-link",
                         onclick: move |_| menu_open.set(false),
@@ -153,10 +144,10 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                 }
                 div { class: "kh-mobile-menu-actions",
                     a {
-                        href: "/browse",
+                        href: "/account",
                         class: "kh-btn-brand",
                         onclick: move |_| menu_open.set(false),
-                        "Customer App"
+                        "My Account"
                     }
                     a {
                         href: "/dashboard",

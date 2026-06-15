@@ -81,16 +81,19 @@ pub fn Button(
     children: Element,
     #[props(default)] onclick: EventHandler<MouseEvent>,
     variant: Option<String>, // "brand", "outline", "accent"
+    style_attr: Option<String>,
 ) -> Element {
     let variant_class = match variant.as_deref() {
         Some("outline") => "kh-btn-outline",
         Some("accent") => "kh-btn-accent",
         _ => "kh-btn-brand",
     };
+    let style_str = style_attr.unwrap_or_default();
 
     rsx! {
         button {
             class: "{variant_class}",
+            style: "{style_str}",
             onclick: move |e| onclick.call(e),
             {children}
         }

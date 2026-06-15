@@ -1,4 +1,6 @@
 pub mod admin_overview;
+pub mod orders;
+pub mod product_form;
 pub mod products;
 pub mod vendor_overview;
 
@@ -29,10 +31,10 @@ pub fn DashboardLayout() -> Element {
                         span { "📦" }
                         "Products"
                     }
-                    // Mock link for now
-                    a {
-                        href: "#",
+                    Link {
+                        to: Route::DashboardOrders {},
                         class: "kh-sidebar-link",
+                        active_class: "active",
                         span { "📋" }
                         "Orders"
                     }

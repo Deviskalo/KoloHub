@@ -8,3 +8,4 @@ pub mod not_found;
 pub mod product;
 pub mod track;
 pub mod info;
+pub mod account;

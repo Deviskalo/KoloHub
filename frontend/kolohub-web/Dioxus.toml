@@ -7,3 +7,10 @@ title = "KoloHub - Liberia's Digital Marketplace"
 
 [web.config]
 base_path = "/"
+
+[web.resource]
+assets = "public"
+dev = { port = 8080 }
+
+[web.watcher]
+watch_path = ["src", "public"]

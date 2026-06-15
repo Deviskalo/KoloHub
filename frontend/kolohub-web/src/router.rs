@@ -5,16 +5,34 @@ use kolohub_theme::ColorScheme;
 
 use crate::components::top_bar::TopBar;
 use crate::pages::{
-    browse::Browse, category::CategoryPage, cart::Cart, checkout::Checkout, dashboard::admin_overview::AdminOverview,
-    dashboard::products::DashboardProducts, dashboard::vendor_overview::VendorOverview,
-    dashboard::DashboardLayout, home::Home, not_found::NotFound, product::Product, track::Track,
-    info::seller_guidelines::SellerGuidelines,
-    info::payouts_logistics::PayoutsLogistics,
-    info::help_center::HelpCenter,
+    account::addresses::AccountAddresses,
+    account::order_details::AccountOrderDetails,
+    account::orders::AccountOrders,
+    account::payments::AccountPayments,
+    account::profile::AccountProfile,
+    account::security::AccountSecurity,
+    account::AccountLayout,
+    browse::Browse,
+    cart::Cart,
+    category::CategoryPage,
+    checkout::Checkout,
+    dashboard::admin_overview::AdminOverview,
+    dashboard::orders::DashboardOrders,
+    dashboard::product_form::{DashboardProductAdd, DashboardProductEdit},
+    dashboard::products::DashboardProducts,
+    dashboard::vendor_overview::VendorOverview,
+    dashboard::DashboardLayout,
+    home::Home,
     info::contact_us::ContactUs,
-    info::returns::Returns,
-    info::terms::Terms,
+    info::help_center::HelpCenter,
+    info::payouts_logistics::PayoutsLogistics,
     info::privacy::Privacy,
+    info::returns::Returns,
+    info::seller_guidelines::SellerGuidelines,
+    info::terms::Terms,
+    not_found::NotFound,
+    product::Product,
+    track::Track,
 };
 use crate::theme::{load_theme_from_storage, save_theme_to_storage};
 
@@ -53,12 +71,33 @@ pub enum Route {
             #[route("/privacy")]
             Privacy {},
         #[end_layout]
+        
+        #[layout(AccountLayout)]
+            #[route("/account")]
+            AccountProfile {},
+            #[route("/account/orders")]
+            AccountOrders {},
+            #[route("/account/orders/:id")]
+            AccountOrderDetails { id: String },
+            #[route("/account/addresses")]
+            AccountAddresses {},
+            #[route("/account/security")]
+            AccountSecurity {},
+            #[route("/account/payments")]
+            AccountPayments {},
+        #[end_layout]
 
         #[layout(DashboardLayout)]
             #[route("/dashboard")]
             VendorOverview {},
             #[route("/dashboard/products")]
             DashboardProducts {},
+            #[route("/dashboard/products/add")]
+            DashboardProductAdd {},
+            #[route("/dashboard/products/edit/:id")]
+            DashboardProductEdit { id: String },
+            #[route("/dashboard/orders")]
+            DashboardOrders {},
             #[route("/dashboard/admin")]
             AdminOverview {},
         #[end_layout]
