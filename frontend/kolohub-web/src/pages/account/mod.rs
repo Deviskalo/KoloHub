@@ -1,5 +1,6 @@
 pub mod addresses;
 pub mod help_center;
+pub mod notifications;
 pub mod order_details;
 pub mod orders;
 pub mod payments;
@@ -59,6 +60,10 @@ pub fn AccountLayout() -> Element {
                         // Group: Reputation & Rewards
                         div { class: "kh-sidebar-group",
                             label { class: "kh-sidebar-label", "Reputation & Rewards" }
+                            Link { to: Route::AccountNotifications {}, class: "kh-account-link", active_class: "active",
+                                span { "🔔" }
+                                "Notifications"
+                            }
                             Link { to: Route::AccountReviews {}, class: "kh-account-link", active_class: "active",
                                 span { "★" }
                                 "My Reviews"
@@ -86,9 +91,9 @@ pub fn AccountLayout() -> Element {
                             }
                             Link { to: Route::AccountSettings {}, class: "kh-account-link", active_class: "active",
                                 span { "⚙️" }
-                                "Notifications"
+                                "Preferences"
                             }
-                            Link { to: Route::AccountHelp {}, class: "kh-account-link", active_class: "active",
+                             Link { to: Route::AccountHelp {}, class: "kh-account-link", active_class: "active",
                                 span { "❓" }
                                 "Help Center"
                             }

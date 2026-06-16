@@ -2832,4 +2832,103 @@ input:checked + .kh-slider:before {
   color: var(--color-text-primary);
   text-decoration: none;
 }
+
+/* --- Account Notifications Page --- */
+.kh-tab {
+  padding: 0.75rem 1rem;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.kh-tab:hover {
+  color: var(--color-brand);
+}
+
+.kh-tab.active {
+  color: var(--color-brand);
+  border-bottom-color: var(--color-brand);
+}
+
+.kh-notif-card {
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  margin-bottom: 1rem;
+  transition: all 0.3s;
+}
+
+.kh-notif-card:hover {
+  border-color: var(--color-brand-muted);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.kh-notif-card.unread {
+  background: rgba(var(--color-brand-rgb), 0.02);
+  border-left: 4px solid var(--color-brand);
+}
+
+.kh-notif-card-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.kh-notif-card-icon.order { background: rgba(var(--color-brand-rgb), 0.1); color: var(--color-brand); }
+.kh-notif-card-icon.price { background: rgba(234, 179, 8, 0.1); color: #eab308; }
+.kh-notif-card-icon.security { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+.kh-notif-card-body {
+  flex: 1;
+}
+
+.kh-notif-card-title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.kh-notif-card-time {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.kh-notif-card-msg {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.kh-notif-action-btn {
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.kh-notif-action-btn:hover {
+  background: var(--color-brand-muted);
+  color: var(--color-brand);
+  border-color: var(--color-brand);
+}
 "#;

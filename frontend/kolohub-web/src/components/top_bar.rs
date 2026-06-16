@@ -133,6 +133,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         class: "kh-nav-icon-btn",
                         style: "font-size: 1.1rem;",
                         onclick: move |evt| on_toggle.call(evt),
+                        aria_label: "{toggle_label}",
                         "{theme_icon}"
                     }
                 }
@@ -141,6 +142,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                 button {
                     class: "kh-mobile-menu-btn",
                     onclick: move |_| menu_open.set(!menu_open()),
+                    aria_label: "{menu_label}",
                     if menu_open() { "✕" } else { "☰" }
                 }
             }

@@ -7,6 +7,7 @@ use crate::components::top_bar::TopBar;
 use crate::pages::{
     account::addresses::AccountAddresses,
     account::help_center::AccountHelp,
+    account::notifications::AccountNotifications,
     account::order_details::AccountOrderDetails,
     account::orders::AccountOrders,
     account::payments::AccountPayments,
@@ -100,6 +101,8 @@ pub enum Route {
             AccountSettings {},
             #[route("/account/track")]
             AccountTrack {},
+            #[route("/account/notifications")]
+            AccountNotifications {},
         #[end_layout]
 
         #[layout(DashboardLayout)]
