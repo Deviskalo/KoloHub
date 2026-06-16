@@ -1,4 +1,4 @@
-name: Deploy Dioxus App (dx) to Vercel
+name: Deploy Dioxus App to Vercel
 
 on:
   push:
@@ -10,18 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout code
+      # =========================
+      # 1. Checkout repo
+      # =========================
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # =========================
       # 2. Install Rust
+      # =========================
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-unknown-unknown
 
-      # 3. Cache Cargo (speed boost)
-      - name: Cache cargo
+      # =========================
+      # 3. Cache Cargo (faster builds)
+      # =========================
+      - name: Cache Cargo
         uses: actions/cache@v4
         with:
           path: |
@@ -30,21 +36,27 @@ jobs:
             target
           key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
 
-      # 4. Install Dioxus CLI (dx)
+      # =========================
+      # 4. Install Dioxus CLI (MATCHING VERSION)
+      # =========================
       - name: Install Dioxus CLI
-        run: cargo install dioxus-cli --locked
+        run: cargo install dioxus-cli --version 0.6.3 --locked
 
-      # 5. Build project with dx
+      # =========================
+      # 5. Build Dioxus Web App
+      # IMPORTANT: workspace package specified
+      # =========================
       - name: Build Dioxus app
-        run: dx build --release
+        run: dx build --release --package kolohub-web
 
-      # 6. Detect output directory (safe fallback)
+      # =========================
+      # 6. Detect output folder (safe fallback)
+      # =========================
       - name: Locate build output
         run: |
-          echo "Searching for build output..."
+          echo "Scanning build output..."
           ls -R .
 
-          # Adjust this if needed after first run
           if [ -d "dist" ]; then
             echo "OUTPUT_DIR=dist" >> $GITHUB_ENV
           elif [ -d "target/dx" ]; then
@@ -53,11 +65,15 @@ jobs:
             echo "OUTPUT_DIR=." >> $GITHUB_ENV
           fi
 
+      # =========================
       # 7. Install Vercel CLI
+      # =========================
       - name: Install Vercel CLI
         run: npm install -g vercel
 
+      # =========================
       # 8. Deploy to Vercel
+      # =========================
       - name: Deploy to Vercel (Production)
         run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes $OUTPUT_DIR
         env:
