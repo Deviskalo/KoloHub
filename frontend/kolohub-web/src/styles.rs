@@ -2679,33 +2679,152 @@ input:checked + .kh-slider:before {
   color: var(--color-brand);
 }
 
-/* Responsive Visibility Fixes */
-.kh-mobile-menu-btn {
-  display: none !important; /* Hidden by default on desktop */
+/* Responsive Visibility & Flex Anchors */
+.kh-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
-@media (max-width: 900px) { /* Lowered from 1024px to keep desktop view longer */
+.kh-mobile-menu-btn {
+  display: none !important; /* Hidden by default on desktop */
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  z-index: 60;
+}
+
+@media (max-width: 900px) {
   .kh-mobile-menu-btn {
     display: flex !important;
   }
   .kh-search-container {
-    max-width: none;
-    margin: 0 1rem;
     flex: 1;
+    margin: 0 0.5rem;
   }
-  .kh-utility-hub, .kh-btn-categories, .kh-desktop-sep {
+  .kh-btn-categories, .kh-desktop-sep {
     display: none;
   }
-  .kh-actions-row {
-    margin-left: auto;
-    gap: 0.5rem;
+  /* On tablets, we hide Sell/Account but keep the theme/notif icon */
+  .kh-actions-row a {
+    display: none;
   }
 }
 
 @media (max-width: 640px) {
-  .kh-actions-row {
-    display: none; /* Only show in drawer on very small screens */
+  .kh-search-container {
+    display: none; /* Hide search on very small mobile to make room for icons */
   }
+  .kh-utility-hub {
+    display: flex !important; /* Force show notification hub on mobile */
+    margin-left: auto;
+  }
+  .kh-actions-row {
+    margin-left: 0;
+  }
+  .kh-actions-row a {
+    display: none;
+  }
+  .kh-nav-icon-btn {
+    display: flex !important;
+  }
+}
+
+/* --- Mobile Drawer Extensions --- */
+.kh-mobile-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  animation: kh-fade-in 0.3s ease;
+}
+
+.kh-mobile-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 85%;
+  max-width: 320px;
+  background: var(--color-surface);
+  z-index: 1001;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: kh-slide-in-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kh-mobile-drawer-head {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kh-mobile-drawer-title {
+  font-weight: 800;
+  font-size: var(--text-base);
+  color: var(--color-brand);
+}
+
+.kh-drawer-search {
+  padding: 1.25rem;
+  background: var(--color-surface-elevated);
+}
+
+.kh-mobile-menu-links {
+  padding: 1rem 0;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.kh-mobile-menu-link {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: var(--text-sm);
+  transition: all 0.2s;
+}
+
+.kh-mobile-menu-link:hover {
+  background: var(--color-brand-muted);
+  color: var(--color-brand);
+}
+
+.kh-mobile-menu-actions {
+  padding: 1.5rem;
+  border-top: 1px solid var(--color-border-subtle);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@keyframes kh-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes kh-slide-in-right {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }
 
 /* --- Notification Hub UI --- */
