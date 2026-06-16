@@ -2510,4 +2510,201 @@ input:checked + .kh-slider:before {
         grid-template-columns: 1fr;
     }
 }
+
+/* --- Elite Marketplace TopBar Modernization --- */
+.kh-search-container {
+  flex: 1;
+  max-width: 400px;
+  position: relative;
+  margin: 0 1.5rem;
+}
+
+.kh-search-input {
+  width: 100%;
+  height: 2.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  padding: 0 1rem 0 2.75rem;
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.kh-search-input:focus {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-brand);
+  box-shadow: 0 0 0 4px var(--color-brand-muted);
+  max-width: 480px;
+}
+
+.kh-search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+
+.kh-nav-icon-btn {
+  position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.kh-nav-icon-btn:hover {
+  background: var(--color-surface);
+  color: var(--color-brand);
+}
+
+.kh-nav-badge {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.25rem;
+  background: var(--color-brand);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 800;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--color-surface-glass);
+  animation: kh-pulse 2s infinite;
+}
+
+.kh-btn-categories {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-weight-semibold);
+  transition: all 0.2s;
+  border: 1px solid var(--color-border);
+}
+
+.kh-btn-categories:hover {
+  background: var(--color-surface-elevated);
+  border-color: var(--color-brand);
+}
+
+@keyframes kh-pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--color-brand-rgb), 0.4); }
+  70% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(var(--color-brand-rgb), 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(var(--color-brand-rgb), 0); }
+}
+
+/* Mobile Drawer Enhancements */
+.kh-drawer-search {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+}
+
+/* --- Elite Marketplace TopBar Refinements --- */
+.kh-search-container {
+  flex: 1;
+  max-width: 500px; /* Increased from 400px */
+  position: relative;
+  margin: 0 2rem; /* Increased from 1.5rem */
+}
+
+.kh-utility-hub {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem; /* Increased for better separation */
+  margin-right: 1.5rem;
+}
+
+.kh-category-wrapper {
+  position: relative;
+}
+
+.kh-category-dropdown {
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 0;
+  width: 240px;
+  background: var(--color-surface-glass);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 0.75rem;
+  box-shadow: var(--shadow-xl);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+
+.kh-category-wrapper:hover .kh-category-dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.kh-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  transition: all 0.2s;
+}
+
+.kh-dropdown-item:hover {
+  background: var(--color-brand-muted);
+  color: var(--color-brand);
+}
+
+/* Responsive Visibility Fixes */
+.kh-mobile-menu-btn {
+  display: none !important; /* Hidden by default on desktop */
+}
+
+@media (max-width: 900px) { /* Lowered from 1024px to keep desktop view longer */
+  .kh-mobile-menu-btn {
+    display: flex !important;
+  }
+  .kh-search-container {
+    max-width: none;
+    margin: 0 1rem;
+    flex: 1;
+  }
+  .kh-utility-hub, .kh-btn-categories, .kh-desktop-sep {
+    display: none;
+  }
+  .kh-actions-row {
+    margin-left: auto;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .kh-actions-row {
+    display: none; /* Only show in drawer on very small screens */
+  }
+}
 "#;

@@ -16,90 +16,100 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
     };
 
     rsx! {
-        div { style: "position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 50; width: 100%; max-width: 72rem; padding: 0 1rem;",
+        div { style: "position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 50; width: 100%; max-width: 80rem; padding: 0 1rem;",
             nav {
                 class: "kh-surface-glass kh-topbar-nav",
-                style: "border-radius: var(--radius-full); padding: 0.5rem 0.75rem;",
+                style: "border-radius: var(--radius-full); padding: 0.5rem 0.75rem; display: flex; align-items: center; gap: 0.75rem; position: relative;",
+
+                // Brand Section
                 div { class: "kh-brand-group",
                     img {
                         src: "/logo.webp",
                         alt: "KoloHub logo",
-                        style: "width: 2.5rem; height: 2.5rem; border-radius: var(--radius-full); object-fit: contain;",
+                        style: "width: 2.25rem; height: 2.25rem; border-radius: var(--radius-full); object-fit: contain;",
                     }
                     a {
                         href: "/",
                         class: "kh-text-gradient",
-                        style: "font-size: var(--text-lg); font-weight: var(--font-weight-semibold);",
+                        style: "font-size: var(--text-lg); font-weight: var(--font-weight-bold);",
                         "KoloHub"
                     }
                 }
 
-                span { class: "kh-desktop-sep", aria_hidden: "true" }
-
-                div {
-                    class: "kh-nav-links",
-                    style: "justify-content: center; align-items: center; display: flex; ",
-                    a {
-                        href: "/browse",
-                        style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); background: var(--color-brand-muted); color: var(--color-brand-foreground); font-size: var(--text-sm); font-weight: var(--font-weight-semibold); text-decoration: none;",
-                        "Browse Products"
+                // Discovery Section with Dropdown
+                div { class: "kh-category-wrapper",
+                    button { class: "kh-btn-categories",
+                        span { style: "font-size: 1.1rem;", "⊞" }
+                        "Categories"
                     }
-                    a {
-                        href: "/cart",
-                        style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
-                        "Cart"
-                    }
-                    a {
-                        href: "/checkout",
-                        style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
-                        "Checkout & Pay"
-                    }
-                    a {
-                        href: "/account/track",
-                        style: "height: 2.15rem; padding: 0 0.7rem; white-space: nowrap; display: inline-flex; align-items: center; border-radius: var(--radius-md); color: var(--color-text-secondary); font-size: var(--text-sm); font-weight: var(--font-weight-medium); text-decoration: none;",
-                        "Track Delivery"
+                    div { class: "kh-category-dropdown",
+                        a { href: "/browse/produce", class: "kh-dropdown-item", "🥬 Fresh Produce" }
+                        a { href: "/browse/electronics", class: "kh-dropdown-item", "📱 Electronics" }
+                        a { href: "/browse/fashion", class: "kh-dropdown-item", "👕 Fashion & Apparel" }
+                        a { href: "/browse/home", class: "kh-dropdown-item", "🏠 Home & Living" }
+                        hr { style: "border: 0; border-top: 1px solid var(--color-border-subtle); margin: 0.5rem 0;" }
+                        a { href: "/browse", class: "kh-dropdown-item", style: "font-weight: 600;", "View All Categories →" }
                     }
                 }
+
+                // Global Marketplace Search
+                div { class: "kh-search-container",
+                    span { class: "kh-search-icon", "🔍" }
+                    input {
+                        r#type: "text",
+                        class: "kh-search-input",
+                        placeholder: "Search for items, vendors, or services...",
+                    }
+                }
+
+                // Utility Hub (Icons + Badges with better spacing)
+                div { class: "kh-utility-hub",
+                    a { href: "/account/track", class: "kh-nav-icon-btn", title: "Track Delivery",
+                        span { style: "font-size: 1.25rem;", "🚚" }
+                    }
+                    a { href: "/cart", class: "kh-nav-icon-btn", title: "My Cart",
+                        span { style: "font-size: 1.25rem;", "🛒" }
+                        span { class: "kh-nav-badge", "2" }
+                    }
+                    button { class: "kh-nav-icon-btn", title: "Notifications",
+                        span { style: "font-size: 1.25rem;", "🔔" }
+                        span { class: "kh-nav-badge", "•" }
+                    }
+                }
+
                 span { class: "kh-desktop-sep", aria_hidden: "true" }
 
+                // Mode Switching & Theme
                 div { class: "kh-actions-row",
                     a {
                         href: "/account",
                         class: "kh-btn-brand",
-                        style: "height: 2.5rem; padding: 0 0.875rem;",
+                        style: "height: 2.25rem; padding: 0 1rem; border-radius: var(--radius-full); font-size: var(--text-sm);",
                         "My Account"
                     }
                     a {
                         href: "/dashboard",
                         class: "kh-btn-outline",
-                        style: "height: 2.5rem; padding: 0 0.875rem;",
-                        "Vendor & Admin"
+                        style: "height: 2.25rem; padding: 0 1rem; border-radius: var(--radius-full); font-size: var(--text-sm);",
+                        "Sell"
+                    }
+                    button {
+                        class: "kh-nav-icon-btn",
+                        style: "font-size: 1.1rem;",
+                        onclick: move |evt| on_toggle.call(evt),
+                        "{theme_icon}"
                     }
                 }
 
-                div { class: "kh-top-controls",
-                    button {
-                        class: "kh-btn-outline",
-                        style: "height: 2.5rem; width: 2.5rem; padding: 0; font-size: 1.1rem; line-height: 1;",
-                        onclick: move |evt| on_toggle.call(evt),
-                        aria_label: "{toggle_label}",
-                        title: "{toggle_label}",
-                        "{theme_icon}"
-                    }
-                    button {
-                        class: "kh-mobile-menu-btn",
-                        onclick: move |_| menu_open.set(!menu_open()),
-                        aria_label: "{menu_label}",
-                        title: "{menu_label}",
-                        if menu_open() {
-                            "✕"
-                        } else {
-                            "☰"
-                        }
-                    }
+                // Mobile Menu Toggle (Responsive Class)
+                button {
+                    class: "kh-mobile-menu-btn",
+                    onclick: move |_| menu_open.set(!menu_open()),
+                    if menu_open() { "✕" } else { "☰" }
                 }
             }
         }
+
         if menu_open() {
             div {
                 class: "kh-mobile-backdrop",
@@ -107,53 +117,48 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
             }
             aside { class: "kh-mobile-drawer",
                 div { class: "kh-mobile-drawer-head",
-                    p { class: "kh-mobile-drawer-title", "Menu" }
+                    p { class: "kh-mobile-drawer-title", "KoloHub Marketplace" }
                     button {
                         class: "kh-btn-outline",
                         style: "height: 2.2rem; width: 2.2rem; padding: 0;",
                         onclick: move |_| menu_open.set(false),
-                        aria_label: "Close menu",
                         "✕"
                     }
                 }
-                div { class: "kh-mobile-menu-links",
-                    a {
-                        href: "/browse",
-                        class: "kh-mobile-menu-link",
-                        onclick: move |_| menu_open.set(false),
-                        "Browse Products"
-                    }
-                    a {
-                        href: "/cart",
-                        class: "kh-mobile-menu-link",
-                        onclick: move |_| menu_open.set(false),
-                        "Cart"
-                    }
-                    a {
-                        href: "/checkout",
-                        class: "kh-mobile-menu-link",
-                        onclick: move |_| menu_open.set(false),
-                        "Checkout & Pay"
-                    }
-                    a {
-                        href: "/account/track",
-                        class: "kh-mobile-menu-link",
-                        onclick: move |_| menu_open.set(false),
-                        "Track Delivery"
+
+                // Mobile Search
+                div { class: "kh-drawer-search",
+                    div { class: "kh-search-container", style: "margin: 0; max-width: 100%;",
+                        span { class: "kh-search-icon", "🔍" }
+                        input {
+                            r#type: "text",
+                            class: "kh-search-input",
+                            placeholder: "Search anything...",
+                        }
                     }
                 }
-                div { class: "kh-mobile-menu-actions",
-                    a {
-                        href: "/account",
-                        class: "kh-btn-brand",
-                        onclick: move |_| menu_open.set(false),
-                        "My Account"
+
+                div { class: "kh-mobile-menu-links",
+                    a { href: "/browse", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
+                        span { style: "margin-right: 0.75rem;", "🛍️" }
+                        "Browse All"
                     }
-                    a {
-                        href: "/dashboard",
-                        class: "kh-btn-outline",
-                        onclick: move |_| menu_open.set(false),
-                        "Vendor & Admin"
+                    a { href: "/account/track", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
+                        span { style: "margin-right: 0.75rem;", "🚚" }
+                        "Track My Orders"
+                    }
+                    a { href: "/cart", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
+                        span { style: "margin-right: 0.75rem;", "🛒" }
+                        "Shopping Cart"
+                    }
+                }
+
+                div { class: "kh-mobile-menu-actions",
+                    a { href: "/account", class: "kh-btn-brand", onclick: move |_| menu_open.set(false),
+                        "Buyer Portal"
+                    }
+                    a { href: "/dashboard", class: "kh-btn-outline", onclick: move |_| menu_open.set(false),
+                        "Vendor Dashboard"
                     }
                 }
             }
