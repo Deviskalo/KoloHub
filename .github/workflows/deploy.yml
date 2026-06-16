@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       # =========================
-      # 2. Install Rust
+      # 2. Install Rust toolchain
       # =========================
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -25,7 +25,7 @@ jobs:
           targets: wasm32-unknown-unknown
 
       # =========================
-      # 3. Cache Cargo (faster builds)
+      # 3. Cache Cargo (speed boost)
       # =========================
       - name: Cache Cargo
         uses: actions/cache@v4
@@ -37,45 +37,59 @@ jobs:
           key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
 
       # =========================
-      # 4. Install Dioxus CLI (MATCHING VERSION)
+      # 4. Install Dioxus CLI
       # =========================
       - name: Install Dioxus CLI
         run: cargo install dioxus-cli --version 0.6.3 --locked
 
       # =========================
       # 5. Build Dioxus Web App
-      # IMPORTANT: workspace package specified
       # =========================
       - name: Build Dioxus app
         run: dx build --release --package kolohub-web --platform web
 
       # =========================
-      # 6. Detect output folder (safe fallback)
+      # 6. Extract correct build output
       # =========================
-      - name: Locate build output
+      - name: Prepare deploy folder
         run: |
-          echo "Scanning build output..."
-          ls -R .
+          echo "🔍 Searching Dioxus build output..."
 
-          if [ -d "dist" ]; then
-            echo "OUTPUT_DIR=dist" >> $GITHUB_ENV
-          elif [ -d "target/dx" ]; then
-            echo "OUTPUT_DIR=target/dx" >> $GITHUB_ENV
-          else
-            echo "OUTPUT_DIR=." >> $GITHUB_ENV
+          OUTPUT=$(find target/dx -type d -path "*release/web/public" | head -n 1)
+
+          if [ -z "$OUTPUT" ]; then
+            echo "❌ Build output not found!"
+            exit 1
           fi
 
+          echo "✅ Found output: $OUTPUT"
+
+          rm -rf deploy
+          mkdir deploy
+
+          cp -r "$OUTPUT"/* deploy/
+
+          echo "📦 Deploy folder contents:"
+          ls -R deploy
+
       # =========================
-      # 7. Install Vercel CLI
+      # 7. Add SPA fallback (CRITICAL FIX for Vercel)
+      # =========================
+      - name: Add SPA fallback
+        run: |
+          cp deploy/index.html deploy/404.html
+
+      # =========================
+      # 8. Install Vercel CLI
       # =========================
       - name: Install Vercel CLI
         run: npm install -g vercel
 
       # =========================
-      # 8. Deploy to Vercel
+      # 9. Deploy to Vercel
       # =========================
       - name: Deploy to Vercel (Production)
-        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes $OUTPUT_DIR
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes deploy
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
