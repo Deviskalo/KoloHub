@@ -1,0 +1,65 @@
+name: Deploy Dioxus App (dx) to Vercel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Install Rust
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      # 3. Cache Cargo (speed boost)
+      - name: Cache cargo
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: cargo-${{ runner.os }}-${{ hashFiles('**/Cargo.lock') }}
+
+      # 4. Install Dioxus CLI (dx)
+      - name: Install Dioxus CLI
+        run: cargo install dioxus-cli --locked
+
+      # 5. Build project with dx
+      - name: Build Dioxus app
+        run: dx build --release
+
+      # 6. Detect output directory (safe fallback)
+      - name: Locate build output
+        run: |
+          echo "Searching for build output..."
+          ls -R .
+
+          # Adjust this if needed after first run
+          if [ -d "dist" ]; then
+            echo "OUTPUT_DIR=dist" >> $GITHUB_ENV
+          elif [ -d "target/dx" ]; then
+            echo "OUTPUT_DIR=target/dx" >> $GITHUB_ENV
+          else
+            echo "OUTPUT_DIR=." >> $GITHUB_ENV
+          fi
+
+      # 7. Install Vercel CLI
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      # 8. Deploy to Vercel
+      - name: Deploy to Vercel (Production)
+        run: vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} --yes $OUTPUT_DIR
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
