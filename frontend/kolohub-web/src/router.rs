@@ -20,6 +20,7 @@ use crate::pages::{
     account::AccountLayout,
     browse::Browse,
     cart::Cart,
+    categories::Categories,
     category::CategoryPage,
     checkout::Checkout,
     dashboard::admin_overview::AdminOverview,
@@ -52,6 +53,8 @@ pub enum Route {
             Home {},
             #[route("/browse?:query")]
             Browse { query: String },
+            #[route("/categories")]
+            Categories {},
             #[route("/category/:name")]
             CategoryPage { name: String },
             #[route("/product/:id")]

@@ -1,11 +1,12 @@
+pub mod account;
 pub mod browse;
-pub mod category;
 pub mod cart;
+pub mod categories;
+pub mod category;
 pub mod checkout;
 pub mod dashboard;
 pub mod home;
+pub mod info;
 pub mod not_found;
 pub mod product;
 pub mod track;
-pub mod info;
-pub mod account;

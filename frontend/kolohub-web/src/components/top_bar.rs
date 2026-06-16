@@ -48,7 +48,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         a { href: "/browse/fashion", class: "kh-dropdown-item", "👕 Fashion & Apparel" }
                         a { href: "/browse/home", class: "kh-dropdown-item", "🏠 Home & Living" }
                         hr { style: "border: 0; border-top: 1px solid var(--color-border-subtle); margin: 0.5rem 0;" }
-                        a { href: "/browse", class: "kh-dropdown-item", style: "font-weight: 600;", "View All Categories →" }
+                        a { href: "/categories", class: "kh-dropdown-item", style: "font-weight: 600;", "View All Categories →" }
                     }
                 }
 
@@ -177,9 +177,9 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                 }
 
                 div { class: "kh-mobile-menu-links",
-                    a { href: "/browse", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
+                    a { href: "/categories", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
                         span { style: "margin-right: 0.75rem;", "🛍️" }
-                        "Browse All"
+                        "Browse Categories"
                     }
                     a { href: "/account/track", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
                         span { style: "margin-right: 0.75rem;", "🚚" }
