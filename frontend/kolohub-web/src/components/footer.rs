@@ -27,7 +27,7 @@ pub fn Footer() -> Element {
                 div { class: "kh-footer-links",
                     h3 { "Support" }
                     a { href: "/help", "Help Center" }
-                    a { href: "/track", "Track Order" }
+                    a { href: "/account/track", "Track Order" }
                     a { href: "/contact", "Contact Us" }
                     a { href: "/returns", "Returns" }
                 }
