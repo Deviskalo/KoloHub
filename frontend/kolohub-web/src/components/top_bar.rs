@@ -71,9 +71,45 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         span { style: "font-size: 1.25rem;", "🛒" }
                         span { class: "kh-nav-badge", "2" }
                     }
-                    button { class: "kh-nav-icon-btn", title: "Notifications",
-                        span { style: "font-size: 1.25rem;", "🔔" }
-                        span { class: "kh-nav-badge", "•" }
+
+                    // Notification Hub
+                    div { class: "kh-notif-wrapper",
+                        button { class: "kh-nav-icon-btn", title: "Notifications",
+                            span { style: "font-size: 1.25rem;", "🔔" }
+                            span { class: "kh-nav-badge", "•" }
+                        }
+                        div { class: "kh-notif-dropdown",
+                            div { class: "kh-notif-header",
+                                span { class: "kh-notif-title", "Notifications" }
+                                button { class: "kh-notif-clear", "Mark all as read" }
+                            }
+                            div { class: "kh-notif-list",
+                                a { href: "/account/orders", class: "kh-notif-item unread",
+                                    div { class: "kh-notif-icon order", "🚚" }
+                                    div { class: "kh-notif-content",
+                                        span { class: "kh-notif-msg", "Your order #KH-2940 is out for delivery." }
+                                        span { class: "kh-notif-time", "2 mins ago" }
+                                    }
+                                }
+                                a { href: "/browse", class: "kh-notif-item",
+                                    div { class: "kh-notif-icon price", "🏷️" }
+                                    div { class: "kh-notif-content",
+                                        span { class: "kh-notif-msg", "Price drop! Organic Palm Oil is now $12.00." }
+                                        span { class: "kh-notif-time", "1 hour ago" }
+                                    }
+                                }
+                                a { href: "/account/security", class: "kh-notif-item",
+                                    div { class: "kh-notif-icon security", "🛡️" }
+                                    div { class: "kh-notif-content",
+                                        span { class: "kh-notif-msg", "New login detected from Monrovia, LR." }
+                                        span { class: "kh-notif-time", "Yesterday at 4:32 PM" }
+                                    }
+                                }
+                            }
+                            div { class: "kh-notif-footer",
+                                a { href: "/account/notifications", class: "kh-notif-view-all", "View All Notifications →" }
+                            }
+                        }
                     }
                 }
 
