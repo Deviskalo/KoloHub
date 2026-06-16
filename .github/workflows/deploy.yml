@@ -47,7 +47,7 @@ jobs:
       # IMPORTANT: workspace package specified
       # =========================
       - name: Build Dioxus app
-        run: dx build --release --package kolohub-web
+        run: dx build --release --package kolohub-web --platform web
 
       # =========================
       # 6. Detect output folder (safe fallback)
