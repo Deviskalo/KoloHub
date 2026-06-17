@@ -4,6 +4,12 @@ pub const TOKENS_CSS: &str = include_str!(concat!(
 ));
 
 pub const APP_CSS: &str = r#"
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-surface);
+  min-height: 100vh;
+}
 .kh-preview-grid {
   display: grid;
   grid-template-columns: 1fr;

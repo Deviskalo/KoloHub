@@ -138,6 +138,12 @@ fn AppLayout() -> Element {
 
     use_effect(move || {
         save_theme_to_storage(color_scheme());
+        // Sync to document element for global resonance (removes white edges)
+        let is_dark = matches!(color_scheme(), ColorScheme::Dark);
+        let _ = document::eval(&format!(
+            "document.documentElement.classList.toggle('dark', {})",
+            is_dark
+        ));
     });
 
     rsx! {

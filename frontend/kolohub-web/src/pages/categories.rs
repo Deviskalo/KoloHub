@@ -111,7 +111,7 @@ const CATEGORIES: &[CategoryCard] = &[
 #[component]
 pub fn Categories() -> Element {
     rsx! {
-        div { class: "kh-page-wrapper kh-animate-fade-in-up",
+        main { class: "kh-main-shell kh-animate-fade-in-up",
 
             // Hero Header
             div { class: "kh-categories-hero",
