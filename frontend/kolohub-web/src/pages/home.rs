@@ -181,7 +181,7 @@ pub fn Home() -> Element {
                         .to_string(),
                         class: "kh-cat-card kh-surface-glass",
                         style: "transition: transform 0.3s ease; box-shadow: var(--shadow-sm);",
-                        onmouseenter: move |e| { /* CSS handle scaling */ },
+                        onmouseenter: move |_e| { /* CSS handle scaling */ },
                         span { class: "kh-cat-icon", "{icon}" }
                         span { class: "kh-cat-label", "{name}" }
                     }

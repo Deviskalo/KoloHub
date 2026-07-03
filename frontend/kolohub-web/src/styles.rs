@@ -41,7 +41,7 @@ html, body {
   50% { transform: translateY(-10px); }
 }
 
-@keyframes kh-pulse {
+@keyframes kh-timer-pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.05); opacity: 0.8; color: var(--color-accent); }
 }
@@ -57,7 +57,7 @@ html, body {
 }
 
 .kh-animate-pulse {
-  animation: kh-pulse 2s ease-in-out infinite;
+  animation: kh-timer-pulse 2s ease-in-out infinite;
 }
 
 .kh-glow-orb {
@@ -2687,6 +2687,68 @@ input:checked + .kh-slider:before {
 .kh-nav-icon-btn:hover {
   background: var(--color-surface);
   color: var(--color-brand);
+}
+
+/* --- Elite SVG Icons & Micro-interactions --- */
+.kh-icon-svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.kh-nav-icon-btn:hover .kh-icon-svg {
+  filter: drop-shadow(0 0 5px rgba(var(--color-brand-rgb), 0.5));
+  transform: scale(1.08);
+}
+
+.kh-btn-categories:hover .kh-icon-svg {
+  transform: rotate(90deg);
+}
+
+@keyframes kh-bell-shake {
+  0%, 100% { transform: rotate(0); }
+  15% { transform: rotate(-15deg); }
+  30% { transform: rotate(12deg); }
+  45% { transform: rotate(-10deg); }
+  60% { transform: rotate(6deg); }
+  75% { transform: rotate(-4deg); }
+}
+
+.kh-nav-icon-btn:hover .kh-icon-bell {
+  animation: kh-bell-shake 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes kh-badge-bounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.3) translateY(-3px); }
+}
+
+.kh-nav-icon-btn:hover .kh-nav-badge {
+  animation: kh-badge-bounce 0.45s ease-out;
+}
+
+@keyframes kh-cart-nudge {
+  0%, 100% { transform: translateX(0) scale(1.08); }
+  40% { transform: translateX(-3px) scale(1.08); }
+  80% { transform: translateX(2px) scale(1.08); }
+}
+
+.kh-nav-icon-btn:hover .kh-icon-cart {
+  animation: kh-cart-nudge 0.4s ease-in-out;
+}
+
+@keyframes kh-truck-drive {
+  0%, 100% { transform: translateX(0) scale(1.08); }
+  50% { transform: translateX(4px) scale(1.08); }
+}
+
+.kh-nav-icon-btn:hover .kh-icon-truck {
+  animation: kh-truck-drive 0.45s ease-in-out;
 }
 
 .kh-nav-badge {

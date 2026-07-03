@@ -1,8 +1,12 @@
+use crate::router::Route;
 use dioxus::prelude::*;
 
 #[component]
 pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
     let mut menu_open = use_signal(|| false);
+    let mut search_query = use_signal(|| "".to_string());
+    let nav = use_navigator();
+
     let toggle_label = if is_dark {
         "Switch to light mode"
     } else {
@@ -20,7 +24,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
             nav {
                 class: "kh-surface-glass kh-topbar-nav",
                 style: "border-radius: var(--radius-full); padding: 0.5rem 0.75rem; display: flex; align-items: center; gap: 0.75rem; position: relative;",
-
+ 
                 // Brand Section
                 div { class: "kh-brand-group",
                     img {
@@ -35,11 +39,16 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "KoloHub"
                     }
                 }
-
+ 
                 // Discovery Section with Dropdown
                 div { class: "kh-category-wrapper",
                     button { class: "kh-btn-categories",
-                        span { style: "font-size: 1.1rem;", "⊞" }
+                        svg { class: "kh-icon-svg", view_box: "0 0 24 24",
+                            rect { x: "3", y: "3", width: "7", height: "7" }
+                            rect { x: "14", y: "3", width: "7", height: "7" }
+                            rect { x: "14", y: "14", width: "7", height: "7" }
+                            rect { x: "3", y: "14", width: "7", height: "7" }
+                        }
                         "Categories"
                     }
                     div { class: "kh-category-dropdown",
@@ -51,31 +60,56 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         a { href: "/categories", class: "kh-dropdown-item", style: "font-weight: 600;", "View All Categories →" }
                     }
                 }
-
-                // Global Marketplace Search
-                div { class: "kh-search-container",
-                    span { class: "kh-search-icon", "🔍" }
+ 
+                // Global Marketplace Search - Wrapped in dynamic form
+                form { 
+                    class: "kh-search-container",
+                    onsubmit: move |evt| {
+                        evt.prevent_default();
+                        let q = search_query();
+                        if !q.trim().is_empty() {
+                            nav.push(Route::Browse { query: q.trim().to_string() });
+                        }
+                    },
+                    svg { class: "kh-icon-svg kh-search-icon", view_box: "0 0 24 24",
+                        circle { cx: "11", cy: "11", r: "8" }
+                        line { x1: "21", y1: "21", x2: "16.65", y2: "16.65" }
+                    }
                     input {
                         r#type: "text",
                         class: "kh-search-input",
                         placeholder: "Search for items, vendors, or services...",
+                        value: "{search_query}",
+                        oninput: move |evt| search_query.set(evt.value()),
                     }
                 }
-
+ 
                 // Utility Hub (Icons + Badges with better spacing)
                 div { class: "kh-utility-hub",
                     a { href: "/account/track", class: "kh-nav-icon-btn", title: "Track Delivery",
-                        span { style: "font-size: 1.25rem;", "🚚" }
+                        svg { class: "kh-icon-svg kh-icon-truck", view_box: "0 0 24 24",
+                            rect { x: "1", y: "3", width: "15", height: "13" }
+                            polygon { points: "16 8 20 8 23 11 23 16 16 16" }
+                            circle { cx: "5.5", cy: "18.5", r: "2.5" }
+                            circle { cx: "18.5", cy: "18.5", r: "2.5" }
+                        }
                     }
                     a { href: "/cart", class: "kh-nav-icon-btn", title: "My Cart",
-                        span { style: "font-size: 1.25rem;", "🛒" }
+                        svg { class: "kh-icon-svg kh-icon-cart", view_box: "0 0 24 24",
+                            circle { cx: "8", cy: "21", r: "1" }
+                            circle { cx: "19", cy: "21", r: "1" }
+                            path { d: "M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" }
+                        }
                         span { class: "kh-nav-badge", "2" }
                     }
-
+ 
                     // Notification Hub
                     div { class: "kh-notif-wrapper",
                         button { class: "kh-nav-icon-btn", title: "Notifications",
-                            span { style: "font-size: 1.25rem;", "🔔" }
+                            svg { class: "kh-icon-svg kh-icon-bell", view_box: "0 0 24 24",
+                                path { d: "M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" }
+                                path { d: "M13.73 21a2 2 0 0 1-3.46 0" }
+                            }
                             span { class: "kh-nav-badge", "•" }
                         }
                         div { class: "kh-notif-dropdown",
@@ -112,9 +146,9 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         }
                     }
                 }
-
+ 
                 span { class: "kh-desktop-sep", aria_hidden: "true" }
-
+ 
                 // Mode Switching & Theme
                 div { class: "kh-actions-row",
                     a {
@@ -137,7 +171,7 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                         "{theme_icon}"
                     }
                 }
-
+ 
                 // Mobile Menu Toggle (Responsive Class)
                 button {
                     class: "kh-mobile-menu-btn",
@@ -164,29 +198,56 @@ pub fn TopBar(is_dark: bool, on_toggle: EventHandler<MouseEvent>) -> Element {
                     }
                 }
 
-                // Mobile Search
-                div { class: "kh-drawer-search",
+                // Mobile Search - Wrapped in dynamic form
+                form { 
+                    class: "kh-drawer-search",
+                    onsubmit: move |evt| {
+                        evt.prevent_default();
+                        let q = search_query();
+                        if !q.trim().is_empty() {
+                            menu_open.set(false);
+                            nav.push(Route::Browse { query: q.trim().to_string() });
+                        }
+                    },
                     div { class: "kh-search-container", style: "margin: 0; max-width: 100%;",
-                        span { class: "kh-search-icon", "🔍" }
+                        svg { class: "kh-icon-svg kh-search-icon", view_box: "0 0 24 24",
+                            circle { cx: "11", cy: "11", r: "8" }
+                            line { x1: "21", y1: "21", x2: "16.65", y2: "16.65" }
+                        }
                         input {
                             r#type: "text",
                             class: "kh-search-input",
                             placeholder: "Search anything...",
+                            value: "{search_query}",
+                            oninput: move |evt| search_query.set(evt.value()),
                         }
                     }
                 }
 
                 div { class: "kh-mobile-menu-links",
                     a { href: "/categories", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
-                        span { style: "margin-right: 0.75rem;", "🛍️" }
+                        svg { class: "kh-icon-svg", style: "margin-right: 0.75rem; display: inline-block; vertical-align: middle;", view_box: "0 0 24 24",
+                            path { d: "M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" }
+                            line { x1: "3", y1: "6", x2: "21", y2: "6" }
+                            path { d: "M16 10a4 4 0 0 1-8 0" }
+                        }
                         "Browse Categories"
                     }
                     a { href: "/account/track", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
-                        span { style: "margin-right: 0.75rem;", "🚚" }
+                        svg { class: "kh-icon-svg", style: "margin-right: 0.75rem; display: inline-block; vertical-align: middle;", view_box: "0 0 24 24",
+                            rect { x: "1", y: "3", width: "15", height: "13" }
+                            polygon { points: "16 8 20 8 23 11 23 16 16 16" }
+                            circle { cx: "5.5", cy: "18.5", r: "2.5" }
+                            circle { cx: "18.5", cy: "18.5", r: "2.5" }
+                        }
                         "Track My Orders"
                     }
                     a { href: "/cart", class: "kh-mobile-menu-link", onclick: move |_| menu_open.set(false),
-                        span { style: "margin-right: 0.75rem;", "🛒" }
+                        svg { class: "kh-icon-svg", style: "margin-right: 0.75rem; display: inline-block; vertical-align: middle;", view_box: "0 0 24 24",
+                            circle { cx: "8", cy: "21", r: "1" }
+                            circle { cx: "19", cy: "21", r: "1" }
+                            path { d: "M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" }
+                        }
                         "Shopping Cart"
                     }
                 }
