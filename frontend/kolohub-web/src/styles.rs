@@ -3013,46 +3013,69 @@ input:checked + .kh-slider:before {
   position: relative;
 }
 
+/* Full-screen backdrop to close on outside click */
+.kh-notif-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: transparent;
+}
+
 .kh-notif-dropdown {
   position: absolute;
-  top: calc(100% + 1rem);
+  top: calc(100% + 0.75rem);
   right: -1rem;
   width: 380px;
   max-height: 500px;
   background: var(--color-surface-glass);
   backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-2xl);
   padding: 0;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(15px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(15px) scale(0.97);
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.25s;
   z-index: 1000;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.kh-notif-wrapper:hover .kh-notif-dropdown {
+.kh-notif-dropdown--open {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 .kh-notif-header {
-  padding: 1.25rem;
+  padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--color-border-subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
 }
 
 .kh-notif-title {
   font-weight: 800;
   font-size: var(--text-base);
   color: var(--color-text-primary);
+}
+
+/* "3 unread" pill in the header */
+.kh-notif-count-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+  background: rgba(var(--color-brand-rgb), 0.1);
+  color: var(--color-brand);
+  white-space: nowrap;
 }
 
 .kh-notif-clear {
@@ -3062,21 +3085,36 @@ input:checked + .kh-slider:before {
   background: none;
   border: none;
   font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.kh-notif-clear:hover {
+  background: rgba(var(--color-brand-rgb), 0.1);
 }
 
 .kh-notif-list {
   overflow-y: auto;
   flex: 1;
+  max-height: 320px;
 }
 
 .kh-notif-item {
   display: flex;
+  align-items: flex-start;
   gap: 1rem;
   padding: 1rem 1.25rem;
   border-bottom: 1px solid var(--color-border-subtle);
-  transition: all 0.2s;
+  transition: background 0.2s;
   cursor: pointer;
   text-decoration: none;
+  position: relative;
+}
+
+.kh-notif-item:last-child {
+  border-bottom: none;
 }
 
 .kh-notif-item:hover {
@@ -3084,7 +3122,26 @@ input:checked + .kh-slider:before {
 }
 
 .kh-notif-item.unread {
-  background: rgba(var(--color-brand-rgb), 0.02);
+  background: rgba(var(--color-brand-rgb), 0.03);
+  border-left: 3px solid var(--color-brand);
+  padding-left: calc(1.25rem - 3px);
+}
+
+.kh-notif-item.unread:hover {
+  background: rgba(var(--color-brand-rgb), 0.08);
+}
+
+/* Pulsing unread dot on the right side */
+.kh-notif-unread-dot {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-brand);
+  animation: kh-pulse 2s infinite;
 }
 
 .kh-notif-icon {
@@ -3107,6 +3164,7 @@ input:checked + .kh-slider:before {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  padding-right: 1rem;
 }
 
 .kh-notif-msg {
@@ -3123,15 +3181,25 @@ input:checked + .kh-slider:before {
 .kh-notif-footer {
   padding: 1rem;
   text-align: center;
-  background: rgba(var(--color-surface-elevated-rgb), 0.5);
+  border-top: 1px solid var(--color-border-subtle);
+  background: rgba(var(--color-brand-rgb), 0.02);
 }
 
 .kh-notif-view-all {
   font-size: var(--text-sm);
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: var(--color-brand);
   text-decoration: none;
+  transition: color 0.2s, letter-spacing 0.2s;
+  display: inline-block;
 }
+
+.kh-notif-view-all:hover {
+  color: var(--color-brand-dark, var(--color-brand));
+  letter-spacing: 0.01em;
+  text-decoration: underline;
+}
+
 
 /* --- Account Notifications Page --- */
 .kh-tab {
