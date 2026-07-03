@@ -4,12 +4,125 @@ pub const TOKENS_CSS: &str = include_str!(concat!(
 ));
 
 pub const APP_CSS: &str = r#"
+/* --- Global Aesthetic Reset & Scrollbars --- */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-brand-muted) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-muted);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand);
+}
+
 html, body {
   margin: 0;
   padding: 0;
   background: var(--color-surface);
   min-height: 100vh;
 }
+
+/* --- Core Animation Engine --- */
+@keyframes kh-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes kh-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; color: var(--color-accent); }
+}
+
+@keyframes kh-orb-drift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -20px); }
+  100% { transform: translate(0, 0); }
+}
+
+.kh-animate-float {
+  animation: kh-float 3s ease-in-out infinite;
+}
+
+.kh-animate-pulse {
+  animation: kh-pulse 2s ease-in-out infinite;
+}
+
+.kh-glow-orb {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.12;
+  z-index: -1;
+  pointer-events: none;
+  animation: kh-orb-drift 20s infinite ease-in-out;
+}
+
+.kh-glow-orb.primary { background: var(--color-brand); }
+.kh-glow-orb.accent { background: var(--color-accent); }
+
+/* Interactive Hover Glows */
+.kh-cat-card:hover, .kh-flash-card:hover, .kh-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(var(--color-brand-rgb), 0.25);
+  border-color: var(--color-brand);
+}
+
+/* --- Home Page Specific Refinements --- */
+.kh-search-ticker {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 1rem;
+}
+
+.kh-ticker-label {
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-brand);
+  background: var(--color-brand-muted);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+.kh-ticker-content {
+  overflow: hidden;
+  height: 1.2rem;
+  position: relative;
+}
+
+.kh-ticker-item {
+  display: block;
+  animation: kh-ticker-scroll 8s infinite linear;
+}
+
+@keyframes kh-ticker-scroll {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-1.2rem); }
+  50% { transform: translateY(-2.4rem); }
+  75% { transform: translateY(-3.6rem); }
+  100% { transform: translateY(0); }
+}
+
 .kh-preview-grid {
   display: grid;
   grid-template-columns: 1fr;

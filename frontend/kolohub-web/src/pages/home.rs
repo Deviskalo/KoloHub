@@ -16,36 +16,69 @@ pub fn Home() -> Element {
         ("Health & Beauty", "💄"),
     ];
 
+    let mut seconds_remaining = use_signal(|| 15735); // Global ticker for flash deals (04:22:15)
+
+    // Background timer loop
+    use_future(move || async move {
+        loop {
+            #[cfg(target_arch = "wasm32")]
+            gloo_timers::future::TimeoutFuture::new(1000).await;
+
+            #[cfg(not(target_arch = "wasm32"))]
+            tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+
+            if seconds_remaining() > 0 {
+                seconds_remaining -= 1;
+            }
+        }
+    });
+
     let flash_deals = [
         (
             "Smart Watch Pro",
             "45.00",
             "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
             "80%",
-            "04:22:15",
+            seconds_remaining(),
         ),
         (
             "Leather Bag",
             "25.00",
             "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400",
             "45%",
-            "12:05:00",
+            seconds_remaining() + 27765, // Offset for variety
         ),
     ]
     .into_iter()
-    .map(|(name, price, img, stock, time)| {
-        let parts: Vec<&str> = time.split(':').collect();
-        let h = parts.get(0).unwrap_or(&"00").to_string();
-        let m = parts.get(1).unwrap_or(&"00").to_string();
-        let s = parts.get(2).unwrap_or(&"00").to_string();
-        (name, price, img, stock, h, m, s)
+    .map(|(name, price, img, stock, total_sec)| {
+        let h = total_sec / 3600;
+        let m = (total_sec % 3600) / 60;
+        let s = total_sec % 60;
+        (
+            name,
+            price,
+            img,
+            stock,
+            format!("{:02}", h),
+            format!("{:02}", m),
+            format!("{:02}", s),
+        )
     })
     .collect::<Vec<_>>();
 
     rsx! {
         main { class: "kh-main-shell",
+            // Background Orbs for Depth
+            div { class: "kh-glow-orb primary", style: "top: 10%; left: 10%;" }
+            div { class: "kh-glow-orb accent", style: "top: 20%; right: 10%; animation-delay: -5s;" }
+
             // Hero Section — Modernized with UI Components & Advanced Search
             div { class: "kh-storefront-hero kh-hero-banner kh-animate-fade-in-up",
+                // Floating Hero Elements
+                span { class: "kh-animate-float", style: "position: absolute; top: 15%; left: 10%; font-size: 2.5rem; opacity: 0.8;", "🛍️" }
+                span { class: "kh-animate-float", style: "position: absolute; bottom: 20%; right: 15%; font-size: 2rem; animation-delay: 1.5s; opacity: 0.6;", "📱" }
+                span { class: "kh-animate-float", style: "position: absolute; top: 10%; right: 30%; font-size: 1.8rem; animation-delay: 0.8s; opacity: 0.4;", "🚚" }
+
                 div { class: "kh-storefront-content",
                     h1 {
                         class: "kh-storefront-title",
@@ -86,10 +119,21 @@ pub fn Home() -> Element {
                             }
                         }
 
+                        // Dynamic Trending Search Ticker
+                        div { class: "kh-search-ticker",
+                            span { class: "kh-ticker-label", "Trending" }
+                            div { class: "kh-ticker-content",
+                                div { class: "kh-ticker-item", "Latest iPhone 15" }
+                                div { class: "kh-ticker-item", "Liberian Coffee Beans" }
+                                div { class: "kh-ticker-item", "Nimba County Goods" }
+                                div { class: "kh-ticker-item", "Lappa Fashion" }
+                            }
+                        }
+
                         // Advanced Search Dropdown (Appears on Focus)
                         div { class: "kh-search-dropdown",
                             p { style: "font-size: var(--text-xs); font-weight: var(--font-weight-bold); color: var(--color-text-muted); margin: 0 0 0.5rem 0.5rem; text-align: left;",
-                                "TRENDING SEARCHES"
+                                "POPULAR RIGTH NOW"
                             }
                             div { style: "display: grid; gap: 0.25rem;",
                                 for item in ["Latest iPhone", "Liberian Coffee", "Lappa Suits", "Rice & Dry Goods"] {
@@ -123,7 +167,7 @@ pub fn Home() -> Element {
             // Categories Slider
             div { style: "display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;",
                 h2 { style: "font-size: var(--text-xl); font-weight: var(--font-weight-bold); margin: 0; color: var(--color-text-primary);",
-                    "Browse Categories"
+                    "Explore Categories"
                 }
             }
             div {
@@ -136,6 +180,8 @@ pub fn Home() -> Element {
                         }
                         .to_string(),
                         class: "kh-cat-card kh-surface-glass",
+                        style: "transition: transform 0.3s ease; box-shadow: var(--shadow-sm);",
+                        onmouseenter: move |e| { /* CSS handle scaling */ },
                         span { class: "kh-cat-icon", "{icon}" }
                         span { class: "kh-cat-label", "{name}" }
                     }
@@ -172,7 +218,9 @@ pub fn Home() -> Element {
                                 p { style: "font-size: 0.65rem; color: var(--color-text-muted); margin: 0.25rem 0 0;",
                                     "Sold: {stock}"
                                 }
-                                div { class: "kh-countdown",
+                                div {
+                                    class: "kh-countdown",
+                                    class: if h == "00" { "kh-animate-pulse" },
                                     span { class: "kh-countdown-unit", "{h}" }
                                     span { style: "font-size: 0.7rem; color: var(--color-brand);", ":" }
                                     span { class: "kh-countdown-unit", "{m}" }
