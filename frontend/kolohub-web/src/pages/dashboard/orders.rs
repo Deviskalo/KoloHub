@@ -12,40 +12,49 @@ struct OrderRow {
 
 #[component]
 pub fn DashboardOrders() -> Element {
-    let mock_orders = vec![
-        OrderRow {
-            id: "#KH-234",
-            customer: "John Doe",
-            date: "May 12, 2026",
-            total: "LRD 4,500",
-            status: "Preparing",
-            items: 2,
-        },
-        OrderRow {
-            id: "#KH-233",
-            customer: "Marie Johnson",
-            date: "May 11, 2026",
-            total: "LRD 1,200",
-            status: "Shipped",
-            items: 1,
-        },
-        OrderRow {
-            id: "#KH-232",
-            customer: "Prince Kollie",
-            date: "May 10, 2026",
-            total: "LRD 8,100",
-            status: "Delivered",
-            items: 3,
-        },
-        OrderRow {
-            id: "#KH-231",
-            customer: "Satta Sirleaf",
-            date: "May 09, 2026",
-            total: "LRD 2,400",
-            status: "Cancelled",
-            items: 1,
-        },
-    ];
+    let mut orders = use_signal(|| {
+        vec![
+            OrderRow {
+                id: "#KH-234",
+                customer: "John Doe",
+                date: "May 12, 2026",
+                total: "LRD 4,500",
+                status: "Preparing",
+                items: 2,
+            },
+            OrderRow {
+                id: "#KH-233",
+                customer: "Marie Johnson",
+                date: "May 11, 2026",
+                total: "LRD 1,200",
+                status: "Shipped",
+                items: 1,
+            },
+            OrderRow {
+                id: "#KH-232",
+                customer: "Prince Kollie",
+                date: "May 10, 2026",
+                total: "LRD 8,100",
+                status: "Delivered",
+                items: 3,
+            },
+            OrderRow {
+                id: "#KH-231",
+                customer: "Satta Sirleaf",
+                date: "May 09, 2026",
+                total: "LRD 2,400",
+                status: "Cancelled",
+                items: 1,
+            },
+        ]
+    });
+    let mut active_tab = use_signal(|| "All Orders".to_string());
+    let selected_tab = active_tab();
+    let visible_orders = orders()
+        .into_iter()
+        .filter(|order| selected_tab == "All Orders" || order.status == selected_tab)
+        .collect::<Vec<_>>();
+    let no_orders = visible_orders.is_empty();
 
     rsx! {
         div { class: "kh-animate-fade-in-up",
@@ -64,9 +73,9 @@ pub fn DashboardOrders() -> Element {
             // Tabs for filtering orders
             div { class: "kh-category-strip", style: "margin-bottom: 2rem;",
                 for tab in ["All Orders", "Pending", "Preparing", "Shipped", "Delivered", "Cancelled"] {
-                    button { 
-                        class: "kh-category-chip",
-                        class: if tab == "All Orders" { "active" },
+                    button {
+                        class: if selected_tab == tab { "kh-category-chip active" } else { "kh-category-chip" },
+                        onclick: move |_| active_tab.set(tab.to_string()),
                         "{tab}"
                     }
                 }
@@ -85,7 +94,7 @@ pub fn DashboardOrders() -> Element {
                         }
                     }
                     tbody {
-                        for o in mock_orders {
+                        for o in visible_orders {
                             tr {
                                 td {
                                     div {
@@ -95,7 +104,7 @@ pub fn DashboardOrders() -> Element {
                                 }
                                 td { "{o.customer}" }
                                 td { "{o.date}" }
-                                td { 
+                                td {
                                     p { style: "margin: 0; font-weight: var(--font-weight-bold);", "{o.total}" }
                                 }
                                 td {
@@ -119,13 +128,35 @@ pub fn DashboardOrders() -> Element {
                                 td {
                                     div { class: "kh-table-actions",
                                         button { class: "kh-btn-outline", style: "padding: 0.5rem; min-width: auto; height: auto;", "👁️" }
-                                        button { class: "kh-btn-outline", style: "padding: 0.5rem; min-width: auto; height: auto;", "📦" }
+                                        button {
+                                            class: "kh-btn-outline",
+                                            style: "padding: 0.5rem; min-width: auto; height: auto;",
+                                            title: "Advance order status",
+                                            disabled: o.status == "Delivered" || o.status == "Cancelled",
+                                            onclick: move |_| {
+                                                let next_status = match o.status {
+                                                    "Pending" => "Preparing",
+                                                    "Preparing" => "Shipped",
+                                                    "Shipped" => "Delivered",
+                                                    _ => o.status,
+                                                };
+                                                if next_status != o.status {
+                                                    if let Some(order) = orders.write().iter_mut().find(|order| order.id == o.id) {
+                                                        order.status = next_status;
+                                                    }
+                                                }
+                                            },
+                                            "📦"
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+            }
+            if no_orders {
+                p { style: "padding: 2rem; text-align: center; color: var(--color-text-muted);", "No orders match this status." }
             }
         }
     }

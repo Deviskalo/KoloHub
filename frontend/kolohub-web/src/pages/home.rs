@@ -16,7 +16,7 @@ pub fn Home() -> Element {
         ("Health & Beauty", "💄"),
     ];
 
-    let mut seconds_remaining = use_signal(|| 15735); // Global ticker for flash deals (04:22:15)
+    let mut elapsed_seconds = use_signal(|| 0_u32);
 
     // Background timer loop
     use_future(move || async move {
@@ -27,9 +27,7 @@ pub fn Home() -> Element {
             #[cfg(not(target_arch = "wasm32"))]
             tokio::time::sleep(std::time::Duration::from_secs(1)).await;
 
-            if seconds_remaining() > 0 {
-                seconds_remaining -= 1;
-            }
+            elapsed_seconds += 1;
         }
     });
 
@@ -39,18 +37,19 @@ pub fn Home() -> Element {
             "45.00",
             "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400",
             "80%",
-            seconds_remaining(),
+            15735_u32, // 04:22:15
         ),
         (
             "Leather Bag",
             "25.00",
             "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400",
             "45%",
-            seconds_remaining() + 27765, // Offset for variety
+            43500_u32, // 12:05:00
         ),
     ]
     .into_iter()
-    .map(|(name, price, img, stock, total_sec)| {
+    .map(|(name, price, img, stock, duration)| {
+        let total_sec = duration.saturating_sub(elapsed_seconds());
         let h = total_sec / 3600;
         let m = (total_sec % 3600) / 60;
         let s = total_sec % 60;
@@ -70,14 +69,29 @@ pub fn Home() -> Element {
         main { class: "kh-main-shell",
             // Background Orbs for Depth
             div { class: "kh-glow-orb primary", style: "top: 10%; left: 10%;" }
-            div { class: "kh-glow-orb accent", style: "top: 20%; right: 10%; animation-delay: -5s;" }
+            div {
+                class: "kh-glow-orb accent",
+                style: "top: 20%; right: 10%; animation-delay: -5s;",
+            }
 
             // Hero Section — Modernized with UI Components & Advanced Search
             div { class: "kh-storefront-hero kh-hero-banner kh-animate-fade-in-up",
                 // Floating Hero Elements
-                span { class: "kh-animate-float", style: "position: absolute; top: 15%; left: 10%; font-size: 2.5rem; opacity: 0.8;", "🛍️" }
-                span { class: "kh-animate-float", style: "position: absolute; bottom: 20%; right: 15%; font-size: 2rem; animation-delay: 1.5s; opacity: 0.6;", "📱" }
-                span { class: "kh-animate-float", style: "position: absolute; top: 10%; right: 30%; font-size: 1.8rem; animation-delay: 0.8s; opacity: 0.4;", "🚚" }
+                span {
+                    class: "kh-animate-float",
+                    style: "position: absolute; top: 15%; left: 10%; font-size: 2.5rem; opacity: 0.8;",
+                    "🛍️"
+                }
+                span {
+                    class: "kh-animate-float",
+                    style: "position: absolute; bottom: 20%; right: 15%; font-size: 2rem; animation-delay: 1.5s; opacity: 0.6;",
+                    "📱"
+                }
+                span {
+                    class: "kh-animate-float",
+                    style: "position: absolute; top: 10%; right: 30%; font-size: 1.8rem; animation-delay: 0.8s; opacity: 0.4;",
+                    "🚚"
+                }
 
                 div { class: "kh-storefront-content",
                     h1 {
@@ -178,10 +192,9 @@ pub fn Home() -> Element {
                         href: Route::CategoryPage {
                             name: name.to_string(),
                         }
-                        .to_string(),
+                            .to_string(),
                         class: "kh-cat-card kh-surface-glass",
                         style: "transition: transform 0.3s ease; box-shadow: var(--shadow-sm);",
-                        onmouseenter: move |_e| { /* CSS handle scaling */ },
                         span { class: "kh-cat-icon", "{icon}" }
                         span { class: "kh-cat-label", "{name}" }
                     }
@@ -208,23 +221,30 @@ pub fn Home() -> Element {
                             div { class: "kh-flash-badge", "SAVE 30%" }
                             img { class: "kh-flash-img", src: "{img}" }
                             div { class: "kh-flash-info",
-                                h4 { style: "margin: 0; font-size: var(--text-base);", "{name}" }
+                                h4 { style: "margin: 0; font-size: var(--text-base);",
+                                    "{name}"
+                                }
                                 p { style: "margin: 0.25rem 0; font-weight: bold; color: var(--color-brand);",
                                     "${price}"
                                 }
                                 div { class: "kh-progress-bar",
-                                    div { class: "kh-progress-fill", style: "width: {stock};" }
+                                    div {
+                                        class: "kh-progress-fill",
+                                        style: "width: {stock};",
+                                    }
                                 }
                                 p { style: "font-size: 0.65rem; color: var(--color-text-muted); margin: 0.25rem 0 0;",
                                     "Sold: {stock}"
                                 }
-                                div {
-                                    class: "kh-countdown",
-                                    class: if h == "00" { "kh-animate-pulse" },
+                                div { class: if h == "00" { "kh-countdown kh-animate-pulse" } else { "kh-countdown" },
                                     span { class: "kh-countdown-unit", "{h}" }
-                                    span { style: "font-size: 0.7rem; color: var(--color-brand);", ":" }
+                                    span { style: "font-size: 0.7rem; color: var(--color-brand);",
+                                        ":"
+                                    }
                                     span { class: "kh-countdown-unit", "{m}" }
-                                    span { style: "font-size: 0.7rem; color: var(--color-brand);", ":" }
+                                    span { style: "font-size: 0.7rem; color: var(--color-brand);",
+                                        ":"
+                                    }
                                     span { class: "kh-countdown-unit", "{s}" }
                                 }
                             }
@@ -355,23 +375,49 @@ pub fn Home() -> Element {
             }
 
             // Section: Community Voice (Newly Added)
-            div { class: "kh-animate-fade-in-up", style: "animation-delay: 1.3s;",
+            div {
+                class: "kh-animate-fade-in-up",
+                style: "animation-delay: 1.3s;",
                 div { style: "text-align: center; margin: 6rem 0 3rem;",
-                    h2 { style: "font-size: 2rem; font-weight: var(--font-weight-bold);", "What our community says" }
-                    p { style: "color: var(--color-text-secondary);", "Join thousands of happy shoppers across Liberia." }
+                    h2 { style: "font-size: 2rem; font-weight: var(--font-weight-bold);",
+                        "What our community says"
+                    }
+                    p { style: "color: var(--color-text-secondary);",
+                        "Join thousands of happy shoppers across Liberia."
+                    }
                 }
                 div { class: "kh-testimonial-grid",
-                    for (name, role, text, img) in [
-                        ("Princess K.", "Shopper from Gbarnga", "I found authentic Lappa suits for my whole family. The delivery was faster than I expected!", "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100"),
-                        ("Dixon M.", "Business Owner", "Selling on KoloHub changed my business. I can now reach customers in Monrovia from my shop in Nimba.", "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100"),
-                    ] {
+                    for (name , role , text , img) in [
+                        (
+                            "Princess K.",
+                            "Shopper from Gbarnga",
+                            "I found authentic Lappa suits for my whole family. The delivery was faster than I expected!",
+                            "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100",
+                        ),
+                        (
+                            "Dixon M.",
+                            "Business Owner",
+                            "Selling on KoloHub changed my business. I can now reach customers in Monrovia from my shop in Nimba.",
+                            "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100",
+                        ),
+                    ]
+                    {
                         div { class: "kh-testimonial-card",
-                            p { style: "font-style: italic; color: var(--color-text-primary); line-height: 1.6;", "\"{text}\"" }
+                            p { style: "font-style: italic; color: var(--color-text-primary); line-height: 1.6;",
+                                "\"{text}\""
+                            }
                             div { class: "kh-testimonial-author",
-                                img { class: "kh-testimonial-avatar", src: "{img}" }
+                                img {
+                                    class: "kh-testimonial-avatar",
+                                    src: "{img}",
+                                }
                                 div {
-                                    h4 { style: "margin: 0; font-size: var(--text-sm);", "{name}" }
-                                    p { style: "margin: 0; font-size: var(--text-xs); color: var(--color-text-muted);", "{role}" }
+                                    h4 { style: "margin: 0; font-size: var(--text-sm);",
+                                        "{name}"
+                                    }
+                                    p { style: "margin: 0; font-size: var(--text-xs); color: var(--color-text-muted);",
+                                        "{role}"
+                                    }
                                 }
                             }
                         }
@@ -380,12 +426,18 @@ pub fn Home() -> Element {
             }
 
             // Section: Newsletter (Newly Added)
-            div { class: "kh-newsletter-section kh-animate-fade-in-up", style: "animation-delay: 1.4s;",
+            div {
+                class: "kh-newsletter-section kh-animate-fade-in-up",
+                style: "animation-delay: 1.4s;",
                 h2 { "Get the best of Liberia in your inbox" }
-                p { style: "color: var(--color-text-secondary); margin-top: 0.5rem;", "Subscribe for weekly deals, new vendor alerts, and more." }
+                p { style: "color: var(--color-text-secondary); margin-top: 0.5rem;",
+                    "Subscribe for weekly deals, new vendor alerts, and more."
+                }
                 form {
                     class: "kh-newsletter-form",
-                    onsubmit: move |evt| { evt.prevent_default(); },
+                    onsubmit: move |evt| {
+                        evt.prevent_default();
+                    },
                     input {
                         r#type: "email",
                         class: "kh-input",
@@ -394,7 +446,9 @@ pub fn Home() -> Element {
                     }
                     crate::components::ui::Button { "Subscribe" }
                 }
-                p { style: "font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 1.5rem;", "We respect your privacy. Unsubscribe at any time." }
+                p { style: "font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 1.5rem;",
+                    "We respect your privacy. Unsubscribe at any time."
+                }
             }
 
             // Become a Vendor CTA — Modernized
