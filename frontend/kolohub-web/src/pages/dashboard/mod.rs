@@ -2,6 +2,7 @@ pub mod admin_overview;
 pub mod orders;
 pub mod product_form;
 pub mod products;
+pub mod vendor_management;
 pub mod vendor_overview;
 
 use crate::router::Route;
